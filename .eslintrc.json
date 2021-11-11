@@ -23,6 +23,8 @@
             {
                 "js": "ignorePackages"
             }
-        ]
+        ],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "eslint func-names": ["error", "never"]
     }
 }
