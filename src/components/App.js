@@ -1,11 +1,11 @@
 import TopBar from "./TopBar";
 
-function App() {
+const App = function () {
   return (
     <>
       <TopBar />
     </>
   );
-}
+};
 
 export default App;
