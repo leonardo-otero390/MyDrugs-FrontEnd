@@ -1,8 +1,10 @@
+import TopBar from "./TopBar";
+
 function App() {
   return (
-    <h1>
-      Wellcome to MyDrugs
-    </h1>
+    <>
+      <TopBar />
+    </>
   );
 }
 
