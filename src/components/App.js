@@ -1,14 +1,22 @@
-import Summary from "./Summary";
-import { GlobalProvider } from "./context/GlobalContext";
+/* eslint-disable react/react-in-jsx-scope */
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignUp from "./SignUp/SignUp";
+import GlobalProvider from "../components/context/GlobalContext";
 
-const App = function () {
+function App () {
   return (
     <GlobalProvider>
-      <div>
-        Wellcome to MyDrugs
-        <Summary />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/">
+            {/* <SignIn /> */}
+          </Route>
+          <Route exact path="/sign-up" element={<SignUp />}>
+            
+          </Route>					
+        </Routes>
+      </BrowserRouter>
     </GlobalProvider>
   );
 };
