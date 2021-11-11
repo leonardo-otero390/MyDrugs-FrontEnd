@@ -1,9 +1,11 @@
+import PageHeader from "./PageHeader.js";
 import TopBar from "./TopBar";
 
-const App = function () {
+function App () {
   return (
     <>
       <TopBar />
+      < PageHeader />
     </>
   );
 };
