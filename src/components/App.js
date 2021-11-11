@@ -1,9 +1,15 @@
+import Summary from "./Summary";
+import { GlobalProvider } from "./context/GlobalContext";
+
 
 const App = function () {
   return (
-    <h1>
-      Wellcome to MyDrugs
-    </h1>
+    <GlobalProvider>
+      <div>
+        Wellcome to MyDrugs
+        <Summary />
+      </div>
+    </GlobalProvider>
   );
 };
 
