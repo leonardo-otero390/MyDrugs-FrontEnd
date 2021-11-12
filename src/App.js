@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./SignUp/SignUp";
+import SignUp from '../src/pages/sign_up/SignUp'
 function App () {
   return (
     <BrowserRouter>

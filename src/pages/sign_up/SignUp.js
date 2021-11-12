@@ -1,12 +1,11 @@
-import { SignForm } from "../_shared/Form";
-import Logo from "../_shared/Logo";
+import { SignForm } from "../../components/Form";
 
 export default function SingUp() {
     return (
         <SignForm>
-            <Logo></Logo>
 
         </SignForm>
         
     )
 }
+
