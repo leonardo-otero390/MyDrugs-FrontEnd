@@ -32,18 +32,24 @@ export default function SingUp() {
 		conflict: null,
 	});
 
+	const [loading, setLoading] = useState(false);
+
 	function submitForm(event) {
 		event.preventDefault();
+		setLoading(true);
+
 		const inputErrors = Object.values(inputError).some((key) => key === true);
 		if (!inputErrors) {
 			API.signUp(input)
 				.then(() => {
 					navigate("/sign-in");
+					setLoading(false);
 				})
 				.catch((error) => {
 					const status = error.response.status;
 					if (status == conflict)
 						setInputError({ ...inputError, conflict: true });
+					setLoading(false);
 				});
 		}
 	}
@@ -141,7 +147,9 @@ export default function SingUp() {
 				{inputError.conflict ? (
 					<InputErrorMsg>User alredy registered</InputErrorMsg>
 				) : null}
-				<SubmitButton type="submit">Register</SubmitButton>
+				<SubmitButton disabled={loading} type="submit">
+					Register
+				</SubmitButton>
 
 				<Link to="/sign-in">Already have an account?</Link>
 			</SignForm>

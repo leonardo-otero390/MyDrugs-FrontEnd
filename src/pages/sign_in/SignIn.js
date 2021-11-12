@@ -23,8 +23,11 @@ export default function SignIn() {
 		emptyFields: false,
 	});
 
+	const [loading, setLoading] = useState(false);
+
 	function submitForm(event) {
 		event.preventDefault();
+		setLoading(true);
 
 		const body = {
 			cpf: input.user.match(cpfRegex) ? input.user : "",
@@ -36,9 +39,11 @@ export default function SignIn() {
 			API.signIn(body)
 				.then(() => {
 					navigate("/");
+					setLoading(false);
 				})
 				.catch(() => {
 					setInputError({ ...inputError, invalidCredentials: true });
+					setLoading(false);
 				});
 		else setInputError({ ...inputError, emptyFields: true });
 	}
@@ -70,7 +75,9 @@ export default function SignIn() {
 					<InputErrorMsg>Please fill in all fields</InputErrorMsg>
 				) : null}
 
-				<SubmitButton type="submit">Register</SubmitButton>
+				<SubmitButton disabled={loading} type="submit">
+					Register
+				</SubmitButton>
 				<Link to="/sign-up">No account yet?</Link>
 			</SignForm>
 		</>

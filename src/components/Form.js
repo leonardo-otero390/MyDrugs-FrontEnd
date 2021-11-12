@@ -71,6 +71,8 @@ const SubmitButton = styled.button`
 	text-align: center;
 
 	margin: 36px;
+
+	cursor: pointer;
 `;
 
 const InputErrorMsg = styled.div`
