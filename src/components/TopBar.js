@@ -19,12 +19,14 @@ export default function TopBar() {
 						}}
 					/>
 				</Link>
-				<BsPersonCircle
-					style={{
-						color: "#F2F2F2",
-						fontSize: "45px",
-					}}
-				/>
+				<Link to={"/sign-in"}>
+					<BsPersonCircle
+						style={{
+							color: "#F2F2F2",
+							fontSize: "45px",
+						}}
+					/>
+				</Link>
 			</div>
 		</StyledNav>
 	);
