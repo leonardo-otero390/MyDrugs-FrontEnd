@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import GlobalContext from "../context/GlobalContext";
+import Spinner from "../Spinner";
+import { Fragment } from "react/cjs/react.production.min";
+
 /* 
 const product = {
     price,
@@ -9,21 +13,26 @@ const product = {
 }
 */
 
-export default function Summary({ products, isActive }) {
+export default function Summary({ isActive }) {
     const [ totalPrice, setTotalPrice ] = useState(0);
     const [ isLoading, setIsLoading ] = useState(isActive)
     const [ paymentOption, setPaymentOption ] = useState(0)
+    const { selectedProducts } = useContext(GlobalContext)
 
     useEffect(() => {
+        let unmounted;
         let sum = 0
-        products.forEach(product => {
+        selectedProducts.forEach(product => {
             sum += (product.price * product.amount)
         });
-        setTotalPrice(sum)
-        setIsLoading(false)
-    }, [setIsLoading, setTotalPrice, products])
 
+        if(!unmounted) {            
+            setTotalPrice(sum)
+            setIsLoading(false)
+        }
 
+        return () => { unmounted = true }
+    }, [setIsLoading, setTotalPrice, selectedProducts])
 
     return (
         <SummaryContainer
@@ -31,50 +40,61 @@ export default function Summary({ products, isActive }) {
             animate={ isActive ? "active" : "unactive" }
             variants={variants}
         >
-            <OrderSection>
-                <Title>Order summary</Title>
-                {
-                    products.map(product => (
-                        <ProductLine>
-                            <ProductInfo>{`${product.amount}x ${product.name}`}</ProductInfo>
-                            <ProductInfo>{`${product.price * product.amount}`}</ProductInfo>
-                        </ProductLine>
-                    ))
-                }
-                <ProductsBalance>
-                    <p>TOTAL</p>
-                    <p>{totalPrice}</p>
-                </ProductsBalance>
-            </OrderSection>
-            <PaymentSection>
-                <Title>Payment options</Title>
-                    <OptionLine onClick={() => setPaymentOption(0)}>
-                        <OptionName>Boleto</OptionName>
-                        <OptionMarker 
-                            initial="unactive"
-                            animate={ paymentOption === 0 ? "active" : "unactive" }
-                            variants={MarkerVariants}
-                        />
-                    </OptionLine>
+            {
+                isLoading
+                    ? <Spinner color="800080" size={32}/>
+                    : selectedProducts.length === 0
+                        ? <Title>Sorry, you have nothing on your card7</Title>
+                        : (
+                            <Fragment>
+                                <OrderSection>
+                                    <Title>Order summary</Title>
+                                    {
+                                        selectedProducts.map(product => (
+                                            <ProductLine key={product.id}>
+                                                <ProductInfo>{`${product.amount}x ${product.name}`}</ProductInfo>
+                                                <ProductInfo>{`${product.price * product.amount}`}</ProductInfo>
+                                            </ProductLine>
+                                        ))
+                                    }
+                                    <ProductsBalance>
+                                        <p>TOTAL</p>
+                                        <p>{totalPrice}</p>
+                                    </ProductsBalance>
+                                </OrderSection>
+                                <PaymentSection>
+                                    <Title>Payment options</Title>
+                                    <OptionLine onClick={() => setPaymentOption(0)}>
+                                        <OptionName>Boleto</OptionName>
+                                        <OptionMarker 
+                                            initial="unactive"
+                                            animate={ paymentOption === 0 ? "active" : "unactive" }
+                                            variants={MarkerVariants}
+                                        />
+                                    </OptionLine>
+                
+                                    <OptionLine onClick={() => setPaymentOption(1)} >
+                                        <OptionName>Card</OptionName>
+                                        <OptionMarker
+                                            initial="unactive"
+                                            animate={ paymentOption === 1 ? "active" : "unactive" }
+                                            variants={MarkerVariants}
+                                        />
+                                    </OptionLine>
+                
+                                    <OptionLine onClick={() => setPaymentOption(2)}>
+                                        <OptionName>Pix</OptionName>
+                                        <OptionMarker 
+                                            initial="unactive"
+                                            animate={ paymentOption === 2 ? "active" : "unactive" }
+                                            variants={MarkerVariants}
+                                        />
+                                    </OptionLine>
+                                </PaymentSection>
+                            </Fragment>
+                        )
+            }
 
-                    <OptionLine onClick={() => setPaymentOption(1)} >
-                        <OptionName>Card</OptionName>
-                        <OptionMarker
-                            initial="unactive"
-                            animate={ paymentOption === 1 ? "active" : "unactive" }
-                            variants={MarkerVariants}
-                        />
-                    </OptionLine>
-
-                    <OptionLine onClick={() => setPaymentOption(2)}>
-                        <OptionName>Pix</OptionName>
-                        <OptionMarker 
-                            initial="unactive"
-                            animate={ paymentOption === 2 ? "active" : "unactive" }
-                            variants={MarkerVariants}
-                        />
-                    </OptionLine>
-            </PaymentSection>
         </SummaryContainer>
     )
 }
@@ -113,6 +133,11 @@ const SummaryContainer = styled(motion.div)`
     width: 300px;
     border-radius: 20px 20px 0px 0px;
     border: 2px solid #800080;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 `
 
 const OrderSection = styled.section`
