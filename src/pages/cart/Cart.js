@@ -6,7 +6,7 @@ export default function Cart() {
         <div>
             <TopBar />
             <PageHeader name="CART" />
-            < CartsProducts />
+            <CartsProducts />
         </div>
     );
 }
