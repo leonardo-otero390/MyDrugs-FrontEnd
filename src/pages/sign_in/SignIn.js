@@ -41,8 +41,10 @@ export default function SignIn() {
 					navigate("/");
 					setLoading(false);
 				})
-				.catch(() => {
-					setInputError({ ...inputError, invalidCredentials: true });
+				.catch((error) => {
+					if (!error.response) alert(`Application error: ${error.message}`);
+					else if (error.response.status === 500) alert(`Server error`);
+					else setInputError({ ...inputError, invalidCredentials: true });
 					setLoading(false);
 				});
 		else setInputError({ ...inputError, emptyFields: true });
@@ -57,6 +59,7 @@ export default function SignIn() {
 					placeholder="E-mail or CPF"
 					onChange={(event) => {
 						setInput({ ...input, user: event.target.value });
+						setInputError({ ...inputError, invalidCredentials: false });
 					}}
 				/>
 
@@ -65,6 +68,7 @@ export default function SignIn() {
 					placeholder="Password"
 					onChange={(event) => {
 						setInput({ ...input, password: event.target.value });
+						setInputError({ ...inputError, invalidCredentials: false });
 					}}
 				/>
 
