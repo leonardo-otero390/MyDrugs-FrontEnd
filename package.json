@@ -40,7 +40,8 @@
 			"last 1 safari version"
 		]
 	},
-	"devDependencies": {"build": "react-scripts build"
+	"devDependencies": {
+		"build": "react-scripts build",
 		"cypress": "^9.0.0"
 	}
 }
