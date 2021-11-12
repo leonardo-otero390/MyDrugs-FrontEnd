@@ -41,12 +41,8 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
     "cypress": "^9.0.0",
     "husky": "^7.0.4",
     "prettier": "2.4.1"
-=======
-    "cypress": "^9.0.0"
->>>>>>> 31f7e2ecd790873103266e55df3d3b411969c39e
   }
 }
