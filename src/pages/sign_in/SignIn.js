@@ -10,6 +10,7 @@ import { useState } from "react";
 import { cpfRegex, emailRegex } from "../sign_up/regex";
 import API from "../../services/API/requests";
 import { useNavigate } from "react-router";
+import { serverError } from "../../services/API/statusCode";
 
 export default function SignIn() {
 	const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function SignIn() {
 				})
 				.catch((error) => {
 					if (!error.response) alert(`Application error: ${error.message}`);
-					else if (error.response.status === 500) alert(`Server error`);
+					else if (error.response.status === serverError) alert(`Server error`);
 					else setInputError({ ...inputError, invalidCredentials: true });
 					setLoading(false);
 				});

@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API from "../../services/API/requests";
 import { cpfRegex, emailRegex, strongPassWordRegex } from "./regex";
-import { conflict } from "../../services/API/statusCode";
+import { serverError, conflict } from "../../services/API/statusCode";
 
 export default function SignUp() {
 	const navigate = useNavigate();
@@ -46,9 +46,12 @@ export default function SignUp() {
 					setLoading(false);
 				})
 				.catch((error) => {
-					const status = error.response.status;
-					if (status == conflict)
+					const status = error.response?.status;
+					if (!error.response) alert(`Application error: ${error.message}`);
+					if (status === serverError) alert(`Server error`);
+					if (status === conflict)
 						setInputError({ ...inputError, conflict: true });
+
 					setLoading(false);
 				});
 		}
