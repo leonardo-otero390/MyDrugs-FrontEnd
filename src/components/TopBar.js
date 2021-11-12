@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BsCart2, BsPersonCircle } from "react-icons/bs";
 import WhiteLogo from "../assets/images/WhiteLogo.png";
+import { Link } from "react-router-dom";
 
 export default function TopBar() {
 	return (
@@ -10,12 +11,14 @@ export default function TopBar() {
 				<h1>
 					<strong>SHOP</strong>
 				</h1>
-				<BsCart2
-					style={{
-						color: "#F2F2F2",
-						fontSize: "45px",
-					}}
-				/>
+				<Link to={"/cart"}>
+					<BsCart2
+						style={{
+							color: "#F2F2F2",
+							fontSize: "45px",
+						}}
+					/>
+				</Link>
 				<BsPersonCircle
 					style={{
 						color: "#F2F2F2",
