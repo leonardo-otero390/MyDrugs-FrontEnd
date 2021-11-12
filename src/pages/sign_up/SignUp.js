@@ -11,7 +11,7 @@ import API from "../../services/API/requests";
 import { cpfRegex, emailRegex, strongPassWordRegex } from "./regex";
 import { conflict } from "../../services/API/statusCode";
 
-export default function SingUp() {
+export default function SignUp() {
 	const navigate = useNavigate();
 
 	const [input, setInput] = useState({
