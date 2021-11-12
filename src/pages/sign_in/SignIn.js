@@ -54,7 +54,7 @@ export default function SignIn() {
 		<>
 			<TopBar />
 			<SignForm onSubmit={submitForm}>
-				<h1>Sign Up</h1>
+				<h1>Login</h1>
 				<Input
 					type="text"
 					placeholder="E-mail or CPF"
