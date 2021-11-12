@@ -81,7 +81,7 @@ export default function SignIn() {
 				) : null}
 
 				<SubmitButton disabled={loading} type="submit">
-					Register
+					Enter
 				</SubmitButton>
 				<Link to="/sign-up">No account yet?</Link>
 			</SignForm>
