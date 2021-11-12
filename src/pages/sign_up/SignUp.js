@@ -30,6 +30,7 @@ export default function SignUp() {
 		confirmPassword: null,
 		passwordMatch: null,
 		conflict: null,
+		emptyFields: null,
 	});
 
 	const [loading, setLoading] = useState(false);
@@ -38,6 +39,12 @@ export default function SignUp() {
 		event.preventDefault();
 		setLoading(true);
 
+		const emptyFields = Object.values(input).some((key) => key === "");
+		if (emptyFields) {
+			setInputError({ ...inputError, emptyFields: true });
+			setLoading(false);
+			return;
+		}
 		const inputErrors = Object.values(inputError).some((key) => key === true);
 		if (!inputErrors) {
 			API.signUp(input)
@@ -54,7 +61,7 @@ export default function SignUp() {
 
 					setLoading(false);
 				});
-		}
+		} else setLoading(false);
 	}
 	return (
 		<>
@@ -149,6 +156,9 @@ export default function SignUp() {
 				) : null}
 				{inputError.conflict ? (
 					<InputErrorMsg>User alredy registered</InputErrorMsg>
+				) : null}
+				{inputError.emptyFields ? (
+					<InputErrorMsg>Please fill in all fields</InputErrorMsg>
 				) : null}
 				<SubmitButton disabled={loading} type="submit">
 					Register
