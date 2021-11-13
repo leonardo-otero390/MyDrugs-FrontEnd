@@ -5,20 +5,20 @@ const GlobalContext = createContext({});
 
 export function GlobalProvider({ children }) {
 	const [userData, setUserData] = useState({});
-	const [selectedProducts, setSelectedProducts] = useState([]);
+	const [cartProducts, setCartProducts] = useState([]);
 
-	function updateSelectedProducts(selectedProductsArray) {
+	function updateCartProducts(cartProductsArray) {
 		API.updateCart();
-		setSelectedProducts(selectedProductsArray);
+		setCartProducts(cartProductsArray);
 	}
 
 	return (
 		<GlobalContext.Provider
 			value={{
 				userData,
-				selectedProducts,
-				updateSelectedProducts,
-				setSelectedProducts,
+				cartProducts,
+				updateCartProducts,
+				setCartProducts,
 			}}
 		>
 			{children}
