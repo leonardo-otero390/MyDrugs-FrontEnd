@@ -1,20 +1,29 @@
 import { createContext, useState } from "react";
+import API from "../../services/API/requests";
 
 const GlobalContext = createContext({});
 
 export function GlobalProvider({ children }) {
-    const [ userData, setUserData ] = useState({});
-    const [ selectedProducts, setSelectedProducts ] = useState([])
+	const [userData, setUserData] = useState({});
+	const [cartProducts, setCartProducts] = useState([]);
 
-    return (
-        <GlobalContext.Provider value={{
-            userData,
-            selectedProducts,
-            setSelectedProducts
-        }}>
-            {children}
-        </GlobalContext.Provider>
-    )
+	function updateCartProducts(cartProductsArray) {
+		API.updateCart();
+		setCartProducts(cartProductsArray);
+	}
+
+	return (
+		<GlobalContext.Provider
+			value={{
+				userData,
+				cartProducts,
+				updateCartProducts,
+				setCartProducts,
+			}}
+		>
+			{children}
+		</GlobalContext.Provider>
+	);
 }
 
 export default GlobalContext;
