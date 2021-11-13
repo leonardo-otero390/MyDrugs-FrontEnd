@@ -9,9 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API from "../../services/API/requests";
 import { cpfRegex, emailRegex, strongPassWordRegex } from "./regex";
-import { conflict } from "../../services/API/statusCode";
+import { serverError, conflict } from "../../services/API/statusCode";
 
-export default function SingUp() {
+export default function SignUp() {
 	const navigate = useNavigate();
 
 	const [input, setInput] = useState({
@@ -30,6 +30,7 @@ export default function SingUp() {
 		confirmPassword: null,
 		passwordMatch: null,
 		conflict: null,
+		emptyFields: null,
 	});
 
 	const [loading, setLoading] = useState(false);
@@ -38,6 +39,12 @@ export default function SingUp() {
 		event.preventDefault();
 		setLoading(true);
 
+		const emptyFields = Object.values(input).some((key) => key === "");
+		if (emptyFields) {
+			setInputError({ ...inputError, emptyFields: true });
+			setLoading(false);
+			return;
+		}
 		const inputErrors = Object.values(inputError).some((key) => key === true);
 		if (!inputErrors) {
 			API.signUp(input)
@@ -46,12 +53,15 @@ export default function SingUp() {
 					setLoading(false);
 				})
 				.catch((error) => {
-					const status = error.response.status;
-					if (status == conflict)
+					const status = error.response?.status;
+					if (!error.response) alert(`Application error: ${error.message}`);
+					if (status === serverError) alert(`Server error`);
+					if (status === conflict)
 						setInputError({ ...inputError, conflict: true });
+
 					setLoading(false);
 				});
-		}
+		} else setLoading(false);
 	}
 	return (
 		<>
@@ -146,6 +156,9 @@ export default function SingUp() {
 				) : null}
 				{inputError.conflict ? (
 					<InputErrorMsg>User alredy registered</InputErrorMsg>
+				) : null}
+				{inputError.emptyFields ? (
+					<InputErrorMsg>Please fill in all fields</InputErrorMsg>
 				) : null}
 				<SubmitButton disabled={loading} type="submit">
 					Register
