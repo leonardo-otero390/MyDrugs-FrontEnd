@@ -13,7 +13,7 @@ export default function CartsProducts() {
                 <div><h2>Price</h2></div>
             </StyledTableHeaders>
             <ul>
-                {selectedProducts.map(({ name, description, image, quantity, price },index) => <ProductCard key={index} name={name} description={description} image={image} quantity={quantity} price={price}/>)}
+                {selectedProducts.map(({ name, description, image, quantity, price },index) => <ProductCard key={index} index={index} name={name} description={description} image={image} quantity={quantity} price={price}/>)}
             </ul>
         </section>
     );

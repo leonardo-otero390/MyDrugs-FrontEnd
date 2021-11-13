@@ -3,16 +3,27 @@ import styled from "styled-components";
 import { useContext } from "react";
 import GlobalContext from "../../../components/context/GlobalContext";
 
-export default function ProductCard({ name, description, image, quantity, price }) {
+export default function ProductCard({ index, name, description, image, quantity, price }) {
 
     const { selectedProducts, setSelectedProducts } = useContext(GlobalContext);
 
     function addProduct() {
-        const thisProduct = selectedProducts.find((p) => p.name === name);
-        const aux = {...thisProduct};
-        aux.quantity ++;
-        const otherProducts = selectedProducts.find((p) => p.name !== name);
-        if (!otherProducts) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts,aux]);
+        const products = [...selectedProducts];
+        products[index].quantity ++;
+        setSelectedProducts(products);
+    }
+
+    function removeProduct() {
+        const products = [...selectedProducts];
+        if (products[index].quantity === 1) {
+            const confirmRemove = window.confirm("Do you really want to remove?");
+            if (!confirmRemove) return; else {
+                products.splice(index, 1);
+                setSelectedProducts(products); 
+                return;}
+        }
+        products[index].quantity --;
+        setSelectedProducts(products);
     }
 
     return (
@@ -25,7 +36,7 @@ export default function ProductCard({ name, description, image, quantity, price 
                 </div>
             </StyledProductInfo>
             <StyledCounter>
-                <button>
+                <button onClick={removeProduct}>
                     <MinusCircle
                         style={{
                             color: "#F2F2F2",

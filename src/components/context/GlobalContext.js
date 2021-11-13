@@ -14,10 +14,10 @@ export function GlobalProvider({ children }) {
             price:99.99
 
         }])
-        function updateSelectedProducts(selectedProductsArray) {
-            updateCart()
-            setSelectedProducts(selectedProductsArray)
-        }
+    function updateSelectedProducts(selectedProductsArray) {
+        updateCart()
+        setSelectedProducts(selectedProductsArray)
+    }
 
     return (
         <GlobalContext.Provider value={{
