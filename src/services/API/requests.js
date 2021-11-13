@@ -30,4 +30,8 @@ function signIn({ cpf, email, password }) {
 	});
 }
 
+export function updateCart() {
+	
+}
+
 export default API;
