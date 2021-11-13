@@ -3,16 +3,32 @@ import styled from "styled-components";
 import { useContext } from "react";
 import GlobalContext from "../../../components/context/GlobalContext";
 
-export default function ProductCard({ name, description, image, quantity, price }) {
+export default function ProductCard({ index, name, description, image, quantity, price }) {
 
     const { selectedProducts, setSelectedProducts } = useContext(GlobalContext);
 
     function addProduct() {
-        const thisProduct = selectedProducts.find((p) => p.name === name);
-        const aux = {...thisProduct};
-        aux.quantity ++;
-        const otherProducts = selectedProducts.find((p) => p.name !== name);
-        if (!otherProducts) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts,aux]);
+        const thisProduct = selectedProducts[index];
+        const aux = { ...thisProduct };
+        aux.quantity++;
+        const otherProducts = selectedProducts.filter((p) => p.name !== name);
+        if (!otherProducts.length) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts, aux]);
+    }
+
+    function removeProduct() {
+        const thisProduct = selectedProducts[index];
+        const aux = { ...thisProduct };
+        if (aux.quantity === 1) {
+            const confirmRemove = window.confirm("Do you really want to remove?");
+            if (!confirmRemove) return; else {
+                const otherProducts = selectedProducts.filter((p) => p.name !== name);
+                if (!otherProducts.length) setSelectedProducts([]); else setSelectedProducts(otherProducts);
+                return;
+            }
+        }
+        aux.quantity--;
+        const otherProducts = selectedProducts.filter((p) => p.name !== name);
+        if (!otherProducts.length) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts, aux]);
     }
 
     return (
@@ -25,7 +41,7 @@ export default function ProductCard({ name, description, image, quantity, price 
                 </div>
             </StyledProductInfo>
             <StyledCounter>
-                <button>
+                <button onClick={removeProduct}>
                     <MinusCircle
                         style={{
                             color: "#F2F2F2",
