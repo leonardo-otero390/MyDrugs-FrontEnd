@@ -10,8 +10,8 @@ export default function TopBar() {
 	function requestLogOut() {
 		if (window.confirm('Are you sure you want to log out?')) {
 			API.logOut({ token })
-			.then(res => {console.log(res);})
-			.catch(err => {console.log(err);})
+			.then(() => localStorage.removeItem('myDrugs_user'))
+			.catch(() => alert("Wasn't possible to log out"))
 		}
 	}
 	return (
