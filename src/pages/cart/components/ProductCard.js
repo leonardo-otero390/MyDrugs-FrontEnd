@@ -1,39 +1,63 @@
 import { AiFillPlusCircle as PlusCircle, AiFillMinusCircle as MinusCircle } from "react-icons/ai";
 import styled from "styled-components";
+import { useContext } from "react";
+import GlobalContext from "../../../components/context/GlobalContext";
 
-export default function ProductCard() {
+export default function ProductCard({ index, name, description, image, quantity, price }) {
+
+    const { selectedProducts, setSelectedProducts } = useContext(GlobalContext);
+
+    function addProduct() {
+        const products = [...selectedProducts];
+        products[index].quantity ++;
+        setSelectedProducts(products);
+    }
+
+    function removeProduct() {
+        const products = [...selectedProducts];
+        if (products[index].quantity === 1) {
+            const confirmRemove = window.confirm("Do you really want to remove?");
+            if (!confirmRemove) return; else {
+                products.splice(index, 1);
+                setSelectedProducts(products); 
+                return;}
+        }
+        products[index].quantity --;
+        setSelectedProducts(products);
+    }
+
     return (
-            <StyledProductCard>
-                    <StyledProductInfo>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTntsqa5WFKMcDxTYJIM1taDmqlEay2jkwSsg&usqp=CAU" alt="pills" />
-                        <div>
-                            <h3><strong>Pills</strong></h3>
-                            <p>Product description, nothing too much important just a lorem ipsum to preencher tudo</p>
-                        </div>
-                    </StyledProductInfo>
-                    <StyledCounter>
-                        <button>
-                            <MinusCircle
-                                style={{
-                                    color: "#F2F2F2",
-                                    fontSize: "32px",
-                                }}
-                            />
-                        </button>
-                        <h1><strong>1</strong></h1>
-                        <button>
-                            <PlusCircle
-                                style={{
-                                    color: "#F2F2F2",
-                                    fontSize: "32px",
-                                }}
-                            />
-                        </button>
-                    </StyledCounter>
-                    <StyledPrice>
-                        <h1><strong>U$ 99,99</strong></h1>
-                    </StyledPrice>
-                </StyledProductCard>
+        <StyledProductCard>
+            <StyledProductInfo>
+                <img src={image} alt={name} />
+                <div>
+                    <h3><strong>{name}</strong></h3>
+                    <p>{description}</p>
+                </div>
+            </StyledProductInfo>
+            <StyledCounter>
+                <button onClick={removeProduct}>
+                    <MinusCircle
+                        style={{
+                            color: "#F2F2F2",
+                            fontSize: "32px",
+                        }}
+                    />
+                </button>
+                <h1><strong>{quantity}</strong></h1>
+                <button onClick={addProduct}>
+                    <PlusCircle
+                        style={{
+                            color: "#F2F2F2",
+                            fontSize: "32px",
+                        }}
+                    />
+                </button>
+            </StyledCounter>
+            <StyledPrice>
+                <h1><strong>U$ {price}</strong></h1>
+            </StyledPrice>
+        </StyledProductCard>
     );
 }
 const StyledProductInfo = styled.ul`
