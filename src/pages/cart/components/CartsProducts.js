@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import GlobalContext from "../../../components/context/GlobalContext";
 import ProductCard from "./ProductCard";
 
 export default function CartsProducts() {
+    const { selectedProducts } = useContext(GlobalContext);
     return (
         <section>
             <StyledTableHeaders>
@@ -10,7 +13,7 @@ export default function CartsProducts() {
                 <div><h2>Price</h2></div>
             </StyledTableHeaders>
             <ul>
-                <ProductCard />
+                {selectedProducts.map(({ name, description, image, quantity, price },index) => <ProductCard key={index} index={index} name={name} description={description} image={image} quantity={quantity} price={price}/>)}
             </ul>
         </section>
     );

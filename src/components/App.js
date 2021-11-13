@@ -17,7 +17,7 @@ function App() {
 					<Route exact path="/cart" element={<Cart />} />
 					<Route exact path="/sign-in" element={<SignIn />} />
 					<Route exact path="/sign-up" element={<SignUp />} />
-					<Route exact path="/test" element={<Tester />}/>
+					<Route exact path="/test" element={<Tester />} />
 				</Routes>
 			</GlobalProvider>
 		</BrowserRouter>
