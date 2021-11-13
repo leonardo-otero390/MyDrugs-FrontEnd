@@ -29,6 +29,7 @@ const Counter = styled.div`
 	justify-content: space-around;
 	align-items: center;
 	font-size: 20px;
+	font-weight: 700;
 
 	svg {
 		font-size: 30px;
