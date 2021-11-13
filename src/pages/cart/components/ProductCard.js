@@ -8,27 +8,22 @@ export default function ProductCard({ index, name, description, image, quantity,
     const { selectedProducts, setSelectedProducts } = useContext(GlobalContext);
 
     function addProduct() {
-        const thisProduct = selectedProducts[index];
-        const aux = { ...thisProduct };
-        aux.quantity++;
-        const otherProducts = selectedProducts.filter((p) => p.name !== name);
-        if (!otherProducts.length) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts, aux]);
+        const products = [...selectedProducts];
+        products[index].quantity ++;
+        setSelectedProducts(products);
     }
 
     function removeProduct() {
-        const thisProduct = selectedProducts[index];
-        const aux = { ...thisProduct };
-        if (aux.quantity === 1) {
+        const products = [...selectedProducts];
+        if (products[index].quantity === 1) {
             const confirmRemove = window.confirm("Do you really want to remove?");
             if (!confirmRemove) return; else {
-                const otherProducts = selectedProducts.filter((p) => p.name !== name);
-                if (!otherProducts.length) setSelectedProducts([]); else setSelectedProducts(otherProducts);
-                return;
-            }
+                products.splice(index, 1);
+                setSelectedProducts(products); 
+                return;}
         }
-        aux.quantity--;
-        const otherProducts = selectedProducts.filter((p) => p.name !== name);
-        if (!otherProducts.length) setSelectedProducts([aux]); else setSelectedProducts([...otherProducts, aux]);
+        products[index].quantity --;
+        setSelectedProducts(products);
     }
 
     return (
