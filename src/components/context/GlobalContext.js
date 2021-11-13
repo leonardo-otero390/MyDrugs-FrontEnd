@@ -16,6 +16,7 @@ export function GlobalProvider({ children }) {
 		<GlobalContext.Provider
 			value={{
 				userData,
+				setUserData,
 				cartProducts,
 				updateCartProducts,
 				setCartProducts,
