@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 export default function TopBar() {
 	return (
 		<StyledNav>
-			<img src={WhiteLogo} alt="logo" />
+			<Link to="/">
+				<img src={WhiteLogo} alt="logo" />
+			</Link>
 			<div>
 				<h1>
 					<strong>SHOP</strong>

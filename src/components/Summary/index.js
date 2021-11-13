@@ -6,7 +6,9 @@ import Spinner from "../Spinner";
 import { Fragment } from "react/cjs/react.production.min";
 
 /* 
+product expected schema
 const product = {
+    id,
     price,
     amount,
     name
@@ -44,11 +46,11 @@ export default function Summary({ isActive }) {
                 isLoading
                     ? <Spinner color="800080" size={32}/>
                     : selectedProducts.length === 0
-                        ? <Title>Sorry, you have nothing on your card7</Title>
+                        ? <Title>Sorry, you have nothing on your cart yet</Title>
                         : (
                             <Fragment>
+                                <Title>Order summary</Title>
                                 <OrderSection>
-                                    <Title>Order summary</Title>
                                     {
                                         selectedProducts.map(product => (
                                             <ProductLine key={product.id}>
@@ -62,8 +64,8 @@ export default function Summary({ isActive }) {
                                         <p>{totalPrice}</p>
                                     </ProductsBalance>
                                 </OrderSection>
+                                <Title>Payment options</Title>
                                 <PaymentSection>
-                                    <Title>Payment options</Title>
                                     <OptionLine onClick={() => setPaymentOption(0)}>
                                         <OptionName>Boleto</OptionName>
                                         <OptionMarker 
@@ -91,6 +93,12 @@ export default function Summary({ isActive }) {
                                         />
                                     </OptionLine>
                                 </PaymentSection>
+                                <CheckoutButton
+                                    whileHover={{ scale: 1.04 }}
+                                    whileTap={{ scale: 0.99 }}
+                                >
+                                    Check out
+                                </CheckoutButton>
                             </Fragment>
                         )
             }
@@ -101,7 +109,7 @@ export default function Summary({ isActive }) {
 
 const variants = {
     active: {
-        height: "400px",
+        height: "500px",
         opacity: 1,
         padding: "20px",
     },
@@ -116,7 +124,7 @@ const variants = {
 const MarkerVariants = {
     active: {
         scale: 1,
-        opacity: 1
+        opacity: 1,
     },
     unactive: {
         scale: 0,
@@ -135,24 +143,59 @@ const SummaryContainer = styled(motion.div)`
     border: 2px solid #800080;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+    font-family: 'Roboto', sans-serif;
 `
 
 const OrderSection = styled.section`
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+    
+    ::-webkit-scrollbar {
+        width: 5px;               /* width of the entire scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+        background: inherit;        /* color of the tracking area */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #800080;    /* color of the scroll thumb */
+        border-radius: 20px;       /* roundness of the scroll thumb */
+    }
 `
 
 const PaymentSection = styled.section`
     display: flex;
-    flex-direction: column;`
+    flex-direction: column;
+    width: 100%;  
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+
+    ::-webkit-scrollbar {
+        width: 5px;               /* width of the entire scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+        background: inherit;        /* color of the tracking area */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #800080;    /* color of the scroll thumb */
+        border-radius: 20px;       /* roundness of the scroll thumb */
+    }
+`
 
 const Title = styled.h1`
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
+    font-size: 1.2rem;
+    line-height: 20px;
 `
 
 const ProductLine = styled.div`
@@ -173,6 +216,8 @@ const ProductsBalance = styled.div`
     font-weight: bolder;
     font-size: 20px;
     margin: 10px 0px 30px 0px;
+    color: #800080;
+    text-shadow: 2px 2px 2px #80008090;
 `
 
 const OptionLine = styled.div`
@@ -193,4 +238,18 @@ const OptionMarker = styled(motion.div)`
     width: 18px;
     height: 18px;
     border-radius: 2px;
+`
+
+const CheckoutButton = styled(motion.button)`
+    width: 90%;
+    max-width: 300px;
+    height: 32px;
+    align-self: center;
+    margin-top: 20px;
+    background-color: #00ADF0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-weight: 600;
 `
