@@ -1,7 +1,6 @@
-import { useState } from "react/cjs/react.development";
 import { Card, ProductInfo, DinamicInfo, Button, CartQuantity } from "./styles";
 import ItemCounter from "./ItemCounter";
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import GlobalContext from "../../components/context/GlobalContext";
 
 export default function Product({ id, name, description, price, image }) {
