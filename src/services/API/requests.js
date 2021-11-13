@@ -3,6 +3,7 @@ import axiosBase from "./axiosBase";
 const API = {
 	signUp,
 	signIn,
+	updateCart,
 };
 
 function createBearerAuthorization(token) {
@@ -30,8 +31,6 @@ function signIn({ cpf, email, password }) {
 	});
 }
 
-export function updateCart() {
-	
-}
+function updateCart() {}
 
 export default API;

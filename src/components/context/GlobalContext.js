@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { updateCart } from "../../services/API/requests";
+import API from "../../services/API/requests";
 
 const GlobalContext = createContext({});
 
@@ -8,7 +8,7 @@ export function GlobalProvider({ children }) {
 	const [selectedProducts, setSelectedProducts] = useState([]);
 
 	function updateSelectedProducts(selectedProductsArray) {
-		updateCart();
+		API.updateCart();
 		setSelectedProducts(selectedProductsArray);
 	}
 
