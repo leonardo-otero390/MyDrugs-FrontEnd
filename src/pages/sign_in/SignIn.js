@@ -34,7 +34,7 @@ export default function SignIn() {
 	useEffect(() => {
 		const localStoragedUser = getUserFromLocalStorage();
 
-		if (localStoragedUser) {
+		if (localStoragedUser?.user?.token) {
 			setLoading(false);
 			navigate("/");
 			setUserData(localStoragedUser);

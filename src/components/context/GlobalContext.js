@@ -9,7 +9,10 @@ export function GlobalProvider({ children }) {
 
 	function updateCartProducts(cartProductsArray) {
 		API.updateCart();
-		setUserData({ ...userData, cart: cartProductsArray });
+		setUserData({
+			...userData,
+			user: { ...userData.user, cart: cartProductsArray },
+		});
 		setLocalStorage({
 			...userData,
 			user: { ...userData.user, cart: cartProductsArray },
