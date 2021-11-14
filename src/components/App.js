@@ -3,10 +3,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalContext";
 import Cart from "../pages/cart/Cart";
-import Products from "../pages/products/Products";
+
 import SignUp from "../pages/sign_up/SignUp";
 import SignIn from "../pages/sign_in/SignIn";
 import Tester from "./Summary/test";
+import Products from "../pages/products/Products";
 
 function App() {
 	return (

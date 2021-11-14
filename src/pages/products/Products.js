@@ -3,8 +3,23 @@ import PageHeader from "../../components/PageHeader";
 import TopBar from "../../components/TopBar";
 import Product from "./Product";
 import productTest from "../../assets/images/productTest.png";
+import { useContext, useEffect } from "react";
+import GlobalContext from "../../components/context/GlobalContext";
 
 export default function Products() {
+	const { setCartProducts, userData, getUserFromLocalStorage } =
+		useContext(GlobalContext);
+
+	useEffect(() => {
+		const localStorage = getUserFromLocalStorage();
+		if (localStorage?.user?.cart) {
+			const storagedCart = localStorage?.user?.cart;
+			setCartProducts(storagedCart);
+		}
+
+		if (userData.user?.cart) setCartProducts(userData.user.cart);
+	}, []);
+
 	//products just for test
 	//will be replaced by database products
 	//and the page will be populated dinamically
