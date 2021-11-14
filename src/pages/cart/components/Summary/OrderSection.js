@@ -14,7 +14,7 @@ export default function OrderSection() {
         console.log(cartProducts)
 
         cartProducts.forEach(product => {
-            sum += (product.price * product.quantity)
+            sum += (Number(product.price) * product.quantity)
         });
 
         if(!unmounted) setTotalPrice(sum)
@@ -30,13 +30,13 @@ export default function OrderSection() {
                 cartProducts.map((product, index) => (
                     <ProductLine key={index}>
                         <ProductInfo>{`${product.quantity}x ${product.name}`}</ProductInfo>
-                        <ProductInfo>{`${product.price * product.quantity}`}</ProductInfo>
+                        <ProductInfo>{`${(Number(product.price) * product.quantity).toFixed(2)}`}</ProductInfo>
                     </ProductLine>
                 ))
             }
             <ProductsBalance>
                 <p>TOTAL</p>
-                <p>{totalPrice}</p>
+                <p>{totalPrice.toFixed(2)}</p>
             </ProductsBalance>
         </OrderSectionContainer>
     )

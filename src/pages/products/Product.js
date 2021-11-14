@@ -68,7 +68,7 @@ export default function Product({ id, name, description, price, image }) {
 				<img src={image} alt="product" />
 				<h1>{name}</h1>
 				<p>{description}</p>
-				<strong>{price}</strong>
+				<strong>{`U$ ${Number(price).toFixed(2)}`}</strong>
 			</ProductInfo>
 
 			<DinamicInfo>
