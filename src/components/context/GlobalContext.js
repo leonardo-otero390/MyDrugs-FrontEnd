@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { updateCart } from "../../services/API/requests";
 import API from "../../services/API/requests";
 
 const GlobalContext = createContext({});
