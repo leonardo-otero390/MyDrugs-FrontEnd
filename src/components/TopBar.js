@@ -25,7 +25,9 @@ export default function TopBar() {
 	}
 	return (
 		<StyledNav>
-			<img src={WhiteLogo} alt="logo" />
+			<Link to="/">
+				<img src={WhiteLogo} alt="logo" />
+			</Link>
 			<div>
 				<Link to={"/"}>
 					<h1>
