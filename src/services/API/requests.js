@@ -3,6 +3,7 @@ import axiosBase from "./axiosBase";
 const API = {
 	signUp,
 	signIn,
+	logOut,
 	updateCart,
 };
 
@@ -31,6 +32,10 @@ function signIn({ cpf, email, password }) {
 	});
 }
 
-function updateCart() {}
+function logOut({ token }) {
+	return axiosBase.delete("/sessions", createBearerAuthorization(token));
+}
+
+function updateCart() { }
 
 export default API;
