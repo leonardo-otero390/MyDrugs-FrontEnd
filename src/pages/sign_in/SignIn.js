@@ -6,14 +6,21 @@ import {
 } from "../../components/Form";
 import TopBar from "../../components/TopBar";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { cpfRegex, emailRegex } from "../sign_up/regex";
 import API from "../../services/API/requests";
 import { useNavigate } from "react-router";
 import { serverError } from "../../services/API/statusCode";
+import GlobalContext from "../../components/context/GlobalContext";
 
 export default function SignIn() {
 	const navigate = useNavigate();
+
+	const [loading, setLoading] = useState(false);
+
+	const { setUserData, getUserFromLocalStorage, setLocalStorage } =
+		useContext(GlobalContext);
+
 	const [input, setInput] = useState({
 		user: "",
 		password: "",
@@ -24,7 +31,15 @@ export default function SignIn() {
 		emptyFields: false,
 	});
 
-	const [loading, setLoading] = useState(false);
+	useEffect(() => {
+		const localStoragedUser = getUserFromLocalStorage();
+
+		if (localStoragedUser?.user?.token) {
+			setLoading(false);
+			navigate("/");
+			setUserData(localStoragedUser);
+		}
+	}, []);
 
 	function submitForm(event) {
 		event.preventDefault();
@@ -38,9 +53,11 @@ export default function SignIn() {
 
 		if (input.user && input.password)
 			API.signIn(body)
-				.then(() => {
+				.then((resp) => {
 					navigate("/");
 					setLoading(false);
+					setUserData(resp.data);
+					setLocalStorage(resp.data);
 				})
 				.catch((error) => {
 					if (!error.response) alert(`Application error: ${error.message}`);

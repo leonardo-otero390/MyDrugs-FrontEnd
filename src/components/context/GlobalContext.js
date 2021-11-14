@@ -9,16 +9,35 @@ export function GlobalProvider({ children }) {
 
 	function updateCartProducts(cartProductsArray) {
 		API.updateCart();
+		setUserData({
+			...userData,
+			user: { ...userData.user, cart: cartProductsArray },
+		});
+		setLocalStorage({
+			...userData,
+			user: { ...userData.user, cart: cartProductsArray },
+		});
 		setCartProducts(cartProductsArray);
+	}
+
+	function getUserFromLocalStorage() {
+		return JSON.parse(localStorage.getItem("myDrugs_user"));
+	}
+
+	function setLocalStorage(value) {
+		localStorage.setItem("myDrugs_user", JSON.stringify(value));
 	}
 
 	return (
 		<GlobalContext.Provider
 			value={{
 				userData,
+				setUserData,
 				cartProducts,
 				updateCartProducts,
 				setCartProducts,
+				getUserFromLocalStorage,
+				setLocalStorage,
 			}}
 		>
 			{children}
