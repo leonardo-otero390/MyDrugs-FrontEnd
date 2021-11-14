@@ -15,7 +15,6 @@ export default function ProductCard({
 	price,
 }) {
 	const { cartProducts, setCartProducts } = useContext(GlobalContext);
-
 	function addProduct() {
 		const products = [...cartProducts];
 		products[index].quantity++;

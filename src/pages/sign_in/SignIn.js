@@ -18,7 +18,8 @@ export default function SignIn() {
 
 	const [loading, setLoading] = useState(false);
 
-	const { setUserData } = useContext(GlobalContext);
+	const { setUserData, getUserFromLocalStorage, setLocalStorage } =
+		useContext(GlobalContext);
 
 	const [input, setInput] = useState({
 		user: "",
@@ -39,14 +40,6 @@ export default function SignIn() {
 			setUserData(localStoragedUser);
 		}
 	}, []);
-
-	function getUserFromLocalStorage() {
-		return JSON.parse(localStorage.getItem("myDrugs_user"));
-	}
-
-	function setLocalStorage(value) {
-		localStorage.setItem("myDrugs_user", JSON.stringify(value));
-	}
 
 	function submitForm(event) {
 		event.preventDefault();

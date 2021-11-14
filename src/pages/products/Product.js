@@ -1,7 +1,7 @@
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { Card, ProductInfo, DinamicInfo, Button, CartQuantity } from "./styles";
 import ItemCounter from "./ItemCounter";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import GlobalContext from "../../components/context/GlobalContext";
 
 export default function Product({ id, name, description, price, image }) {
@@ -9,6 +9,14 @@ export default function Product({ id, name, description, price, image }) {
 	const [selected, setSelected] = useState(false);
 	const [quantity, setQuantity] = useState(0);
 	const [quantityInCart, setQuantityInCart] = useState(0);
+
+	useEffect(() => {
+		if (!cartProducts.length) return;
+		const productAlredyAdded = cartProducts.find(
+			(product) => product.id === id
+		);
+		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
+	}, [cartProducts]);
 
 	function select(event) {
 		if (event.target.tagName === "DIV" && selected) {

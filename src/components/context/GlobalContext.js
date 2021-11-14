@@ -9,7 +9,20 @@ export function GlobalProvider({ children }) {
 
 	function updateCartProducts(cartProductsArray) {
 		API.updateCart();
+		setUserData({ ...userData, cart: cartProductsArray });
+		setLocalStorage({
+			...userData,
+			user: { ...userData.user, cart: cartProductsArray },
+		});
 		setCartProducts(cartProductsArray);
+	}
+
+	function getUserFromLocalStorage() {
+		return JSON.parse(localStorage.getItem("myDrugs_user"));
+	}
+
+	function setLocalStorage(value) {
+		localStorage.setItem("myDrugs_user", JSON.stringify(value));
 	}
 
 	return (
@@ -20,6 +33,8 @@ export function GlobalProvider({ children }) {
 				cartProducts,
 				updateCartProducts,
 				setCartProducts,
+				getUserFromLocalStorage,
+				setLocalStorage,
 			}}
 		>
 			{children}
