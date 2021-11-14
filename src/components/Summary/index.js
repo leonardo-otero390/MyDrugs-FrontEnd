@@ -5,14 +5,6 @@ import GlobalContext from "../context/GlobalContext";
 import Spinner from "../Spinner";
 import { Fragment } from "react/cjs/react.production.min";
 
-/* 
-const product = {
-    price,
-    amount,
-    name
-}
-*/
-
 export default function Summary({ isActive }) {
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [isLoading, setIsLoading] = useState(isActive);
