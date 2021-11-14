@@ -6,12 +6,21 @@ import { Link } from "react-router-dom";
 import API from "../services/API/requests";
 
 export default function TopBar() {
-	const token = JSON.parse(localStorage.getItem('myDrugs_user'));
+	const userData = JSON.parse(localStorage.getItem('myDrugs_user'));
+	const token = userData ? userData.token : null;
 	function requestLogOut() {
 		if (window.confirm('Are you sure you want to log out?')) {
 			API.logOut({ token })
-			.then(() => localStorage.removeItem('myDrugs_user'))
-			.catch(() => alert("Wasn't possible to log out"))
+				.then(() => {
+					const newData = {
+						"user":{"cart":userData.user.cart},
+					}
+					localStorage.setItem('myDrugs_user',JSON.stringify(newData));
+					window.location.reload();
+				})
+				.catch(() => {
+					alert("Wasn't possible to log out");
+				})
 		}
 	}
 	return (
@@ -37,14 +46,14 @@ export default function TopBar() {
 						}}
 					/>
 				</Link>
-				{token?<button onClick={requestLogOut}>
+				{token ? <button onClick={requestLogOut}>
 					<IoLogOutSharp
 						style={{
 							color: "purple",
 							fontSize: "45px",
 						}}
 					/>
-				</button>: ""}
+				</button> : ""}
 			</div>
 		</StyledNav>
 	);
