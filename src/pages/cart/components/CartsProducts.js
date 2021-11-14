@@ -1,10 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import GlobalContext from "../../../components/context/GlobalContext";
 import ProductCard from "./ProductCard";
 
 export default function CartsProducts() {
-	const { cartProducts } = useContext(GlobalContext);
+	const { cartProducts,setCartProducts, userData, getUserFromLocalStorage } =
+		useContext(GlobalContext);
+
+	useEffect(() => {
+		const localStorage = getUserFromLocalStorage();
+		if (localStorage?.user?.cart) {
+			const storagedCart = localStorage?.user?.cart;
+			setCartProducts(storagedCart);
+		}
+
+		if (userData.user?.cart) setCartProducts(userData.user.cart);
+	}, []);
 	return (
 		<section>
 			<StyledTableHeaders>

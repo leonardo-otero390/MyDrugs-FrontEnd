@@ -14,11 +14,11 @@ export default function ProductCard({
 	quantity,
 	price,
 }) {
-	const { cartProducts, setCartProducts } = useContext(GlobalContext);
+	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 	function addProduct() {
 		const products = [...cartProducts];
 		products[index].quantity++;
-		setCartProducts(products);
+		updateCartProducts(products);
 	}
 
 	function removeProduct() {
@@ -28,12 +28,12 @@ export default function ProductCard({
 			if (!confirmRemove) return;
 			else {
 				products.splice(index, 1);
-				setCartProducts(products);
+				updateCartProducts(products);
 				return;
 			}
 		}
 		products[index].quantity--;
-		setCartProducts(products);
+		updateCartProducts(products);
 	}
 	const totalPrice = 'U$ ' + ((price.replace('U$', '')) * quantity).toFixed(2);
 	return (
