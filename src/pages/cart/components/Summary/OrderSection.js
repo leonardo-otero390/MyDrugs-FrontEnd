@@ -5,27 +5,29 @@ import styled from "styled-components";
 
 export default function OrderSection() {
     const [ totalPrice, setTotalPrice ] = useState(0);
-    const { selectedProducts } = useContext(GlobalContext)
+    const { cartProducts } = useContext(GlobalContext)
 
     useEffect(() => {
         let unmounted;
         let sum = 0;
 
-        selectedProducts.forEach(product => {
+        console.log(cartProducts)
+
+        cartProducts.forEach(product => {
             sum += (product.price * product.quantity)
         });
 
         if(!unmounted) setTotalPrice(sum)
 
         return () => { unmounted = true }
-    }, [ setTotalPrice, selectedProducts ])
+    }, [ setTotalPrice, cartProducts ])
 
     return (
         <OrderSectionContainer
             onClick={e => { e.stopPropagation() }}
         >
             {
-                selectedProducts.map((product, index) => (
+                cartProducts.map((product, index) => (
                     <ProductLine key={index}>
                         <ProductInfo>{`${product.quantity}x ${product.name}`}</ProductInfo>
                         <ProductInfo>{`${product.price * product.quantity}`}</ProductInfo>
