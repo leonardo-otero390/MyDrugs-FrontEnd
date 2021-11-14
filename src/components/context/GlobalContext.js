@@ -44,5 +44,4 @@ export function GlobalProvider({ children }) {
 		</GlobalContext.Provider>
 	);
 }
-
 export default GlobalContext;

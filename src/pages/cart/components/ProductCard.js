@@ -14,11 +14,11 @@ export default function ProductCard({
 	quantity,
 	price,
 }) {
-	const { cartProducts, setCartProducts } = useContext(GlobalContext);
+	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 	function addProduct() {
 		const products = [...cartProducts];
 		products[index].quantity++;
-		setCartProducts(products);
+		updateCartProducts(products);
 	}
 
 	function removeProduct() {
@@ -28,14 +28,14 @@ export default function ProductCard({
 			if (!confirmRemove) return;
 			else {
 				products.splice(index, 1);
-				setCartProducts(products);
+				updateCartProducts(products);
 				return;
 			}
 		}
 		products[index].quantity--;
-		setCartProducts(products);
+		updateCartProducts(products);
 	}
-
+	const totalPrice = 'U$ ' + ((price.replace('U$', '')) * quantity).toFixed(2);
 	return (
 		<StyledProductCard>
 			<StyledProductInfo>
@@ -70,7 +70,12 @@ export default function ProductCard({
 			</StyledCounter>
 			<StyledPrice>
 				<h1>
-					<strong>U$ {price}</strong>
+					<strong>{price}</strong>
+				</h1>
+			</StyledPrice>
+			<StyledPrice>
+				<h1>
+					<strong>{totalPrice}</strong>
 				</h1>
 			</StyledPrice>
 		</StyledProductCard>
@@ -78,7 +83,7 @@ export default function ProductCard({
 }
 const StyledProductInfo = styled.ul`
 	display: flex;
-	width: 50%;
+	width: 40%;
 	img {
 		width: 150px;
 		margin-right: 16px;
@@ -104,7 +109,7 @@ const StyledCounter = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	width: 25%;
+	width: 10%;
 	button {
 		background: none;
 		border: none;
@@ -118,11 +123,12 @@ const StyledCounter = styled.div`
 
 const StyledProductCard = styled.li`
 	display: flex;
+	justify-content:space-between;
 	margin: 16px 0;
 `;
 
 const StyledPrice = styled.div`
-	width: 25%;
+	width: 20%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

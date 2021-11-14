@@ -8,9 +8,11 @@ export default function TopBar() {
 		<StyledNav>
 			<img src={WhiteLogo} alt="logo" />
 			<div>
-				<h1>
-					<strong>SHOP</strong>
-				</h1>
+				<Link to={"/"}>
+					<h1>
+						<strong>SHOP</strong>
+					</h1>
+				</Link>
 				<Link to={"/cart"}>
 					<BsCart2
 						style={{
