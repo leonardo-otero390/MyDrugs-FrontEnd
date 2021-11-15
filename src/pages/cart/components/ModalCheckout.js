@@ -29,7 +29,6 @@ export default function ModalCheckout({ closeModal, modalIsOpen, paymentOption }
     function submitForm(event) {
         event.preventDefault();
         const { email, id, name } = userData.user;
-
         const body = {
             userId: id,
             cartId,
@@ -39,8 +38,8 @@ export default function ModalCheckout({ closeModal, modalIsOpen, paymentOption }
             addressNumber,
             paymentId: paymentOption
         }
-
-        API.checkout({ token: userData.token, body })
+        const token = userData.token;
+        API.checkout({ token, body })
             .then(() => closeModal())
             .catch(alert("Wasn't possible to submit"));
         console.log(body);
