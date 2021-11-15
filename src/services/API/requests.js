@@ -5,7 +5,6 @@ const API = {
 	signIn,
 	logOut,
 	updateCart,
-	getProducts
 };
 
 function createBearerAuthorization(token) {
@@ -35,10 +34,6 @@ function signIn({ cpf, email, password }) {
 
 function logOut({ token }) {
 	return axiosBase.delete("/sessions", createBearerAuthorization(token));
-}
-
-function getProducts() {
-	return axiosBase.get("/products")
 }
 
 function updateCart() { }

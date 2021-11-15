@@ -11,8 +11,6 @@ export default function OrderSection() {
         let unmounted;
         let sum = 0;
 
-        console.log(cartProducts)
-
         cartProducts.forEach(product => {
             sum += (Number(product.price) * product.quantity)
         });

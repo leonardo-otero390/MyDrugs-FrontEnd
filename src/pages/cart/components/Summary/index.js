@@ -20,7 +20,7 @@ const product = {
 export default function Summary() {
     const [ isActive, setIsActive ] = useState(false)
     const { cartProducts } = useContext(GlobalContext)
-
+    
     return (
         <SummaryContainer
             initial="unactive"
@@ -32,7 +32,7 @@ export default function Summary() {
             <Toggler parentIsActive={isActive} toggleState={setIsActive} />
             {
                 cartProducts.length === 0
-                    ? <Title>Sorry, you have nothing on your cart yet</Title>
+                    ? isActive && <Title>Sorry, you have nothing on your cart yet</Title>
                     : (
                         <ContentContainer
                             initial="unactive"
