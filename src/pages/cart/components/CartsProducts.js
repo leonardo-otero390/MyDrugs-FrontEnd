@@ -88,4 +88,9 @@ const StyledTableHeaders = styled.div`
 		font-size: 24px;
 		color: #fff;
 	}
+	@media(max-width:600px){
+		div h2 {
+		font-size: 16px;
+	}
+}
 `;

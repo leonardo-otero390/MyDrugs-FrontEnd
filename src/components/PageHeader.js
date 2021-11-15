@@ -20,6 +20,9 @@ const StyledTitle = styled.header`
 font-family: 'Poppins',sans-serif;
 font-size: 32px;
 color: #F2F2F2;
+@media(max-width:600px){
+    font-size: 24px;
+}
 `
 const StyledTitleContainer = styled.div`
 width:400px;
@@ -34,5 +37,11 @@ div{
 }
 hr{
     border: 5px solid purple;
+}
+@media(max-width:600px){
+    width:60%;
+    hr{
+        border: 3px solid purple;
+    }
 }
 `
