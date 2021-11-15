@@ -2,9 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export default function PaymentSection() {
-    const [ paymentOption, setPaymentOption ] = useState(0)
-
+export default function PaymentSection({payment}) {
+    const {paymentOption,setPaymentOption} = payment;
     return (
         <PaymentSectionContainer
             onClick={e => { e.stopPropagation() }}

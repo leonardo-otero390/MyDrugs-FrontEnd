@@ -17,7 +17,7 @@ const product = {
 }
 */
 
-export default function Summary() {
+export default function Summary({openModal,payment}) {
     const [ isActive, setIsActive ] = useState(false)
     const { cartProducts } = useContext(GlobalContext)
     
@@ -43,7 +43,7 @@ export default function Summary() {
                             <OrderSection />
 
                             <Title>Payment options</Title>                            
-                            <PaymentSection />
+                            <PaymentSection payment={payment} />
 
                             <CheckoutButton
                                 whileHover={{ scale: 1.04 }}
@@ -51,6 +51,7 @@ export default function Summary() {
                                 onClick={e => {
                                     e.stopPropagation()
                                 }}
+                                onClick={openModal}
                             >
                                 Check out
                             </CheckoutButton>
