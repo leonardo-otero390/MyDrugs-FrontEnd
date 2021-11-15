@@ -46,7 +46,7 @@ export default function CartsProducts() {
 						/>
 					)
 				)}
-			</ul>
+			</ul> 
 		</section>
 	);
 }

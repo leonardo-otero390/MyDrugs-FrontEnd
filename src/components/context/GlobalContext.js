@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import API from "../../services/API/requests";
 
 const GlobalContext = createContext({});
@@ -6,6 +6,8 @@ const GlobalContext = createContext({});
 export function GlobalProvider({ children }) {
 	const [userData, setUserData] = useState({});
 	const [cartProducts, setCartProducts] = useState([]);
+	const [ cartId, setCartId ] = useState(-1)
+
 
 	function updateCartProducts(cartProductsArray) {
 		API.updateCart();
