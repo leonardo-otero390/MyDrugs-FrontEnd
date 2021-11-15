@@ -39,7 +39,8 @@ export function GlobalProvider({ children }) {
 
 	function updateCartProducts(newCartProductsArray, product) {
 		console.log("GLOBAL updateCartProducts")
-
+		console.log("newCartProductsArray: ", newCartProductsArray)
+		console.log("product: ", product)
 
 		if(newCartProductsArray.length >= cartProducts.length && userData.token) {
 			console.log("ADICIONANDO")
