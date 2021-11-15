@@ -35,16 +35,20 @@ export default function Product({ id, name, description, price, image }) {
 			(product) => product.id === id
 		);
 		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
-		updateCartProducts([
-			...cartProducts,
-			{
-				id,
-				name,
-				price,
-				quantity: quantityInCart + quantity,
-				image,
-			},
-		]);
+		const alteredProduct = { id, quantity: quantityInCart + quantity };
+		updateCartProducts(
+			[
+				...cartProducts,
+				{
+					id,
+					name,
+					price,
+					quantity: quantityInCart + quantity,
+					image,
+				},
+			],
+			alteredProduct
+		);
 		setQuantityInCart(quantityInCart + quantity);
 		setQuantity(0);
 		setSelected(false);
@@ -56,7 +60,8 @@ export default function Product({ id, name, description, price, image }) {
 			(product) => product.id === id
 		);
 		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
-		updateCartProducts([...cartProducts]);
+		const alteredProduct = { id };
+		updateCartProducts([...cartProducts], alteredProduct);
 		setQuantityInCart(0);
 		setQuantity(0);
 		setSelected(false);
