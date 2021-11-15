@@ -40,6 +40,10 @@ function logOut({ token }) {
 	return axiosBase.delete("/sessions", createBearerAuthorization(token));
 }
 
+function getProducts() {
+	return axiosBase.get("/products");
+}
+
 // returns the cartId and all its products, if there is no products, return an empty array
 async function getCart(token) {
     const response = await axiosBase.get("/cart", createBearerAuthorization(token))
