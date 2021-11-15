@@ -26,26 +26,40 @@ export function GlobalProvider({ children }) {
 		}
 		/* 		else if(storagedData?.user?.cart) setCartProducts(storagedData.user.cart)
 		if(storagedData?.user?.cartId) setCartId(storagedData.user.cartId) */
+		// setLocalStorage({ ...userData, cart: cartProducts, cartId });
 	}, [userData, setCartProducts, update]);
 
 	useEffect(() => {
 		setLocalStorage({ ...userData, cart: cartProducts, cartId });
 	}, [cartProducts]);
 
+	useEffect(() => {
+		API.validateToken(userData.token)
+			.then((resp) => {
+				console.log("token valido");
+				console.log(resp);
+				setUserData(userData);
+			})
+			.catch((err) => {
+				console.log("token inválido");
+				console.log(err);
+				delete userData.token;
+				setUserData(userData);
+			});
+	}, [userData.token]);
+
 	function updateCartProducts(newCartProductsArray, product) {
-		console.log("GLOBAL updateCartProducts");
-		console.log("newCartProductsArray: ", newCartProductsArray);
-		console.log("cartProducts: ", cartProducts);
-		console.log("product: ", product);
-		console.log("cartId: ", cartId);
+		// console.log("GLOBAL updateCartProducts");
+		// console.log("newCartProductsArray: ", newCartProductsArray);
+		// console.log("cartProducts: ", cartProducts);
+		// console.log("product: ", product);
+		// console.log("cartId: ", cartId);
 
-		console.log("newCartArray.length: ", newCartProductsArray.length);
-		console.log("savedCartLength: ", cartProducts.length);
-
-		setCartProducts(newCartProductsArray);
+		// console.log("newCartArray.length: ", newCartProductsArray.length);
+		// console.log("savedCartLength: ", cartProducts.length);
 
 		if (newCartProductsArray.length > cartProducts.length && userData.token) {
-			console.log("ADICIONANDO");
+			// console.log("ADICIONANDO");
 			API.addToCart(userData.token, {
 				cartId,
 				productId: product.id,
@@ -73,6 +87,8 @@ export function GlobalProvider({ children }) {
 					console.log(e);
 					alert("ERRO updateCartProducts");
 				});
+		} else if (!userData.token) {
+			setCartProducts(newCartProductsArray);
 		}
 
 		/* 		setUserData({
