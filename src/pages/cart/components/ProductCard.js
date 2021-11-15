@@ -3,7 +3,7 @@ import {
 	AiFillMinusCircle as MinusCircle,
 } from "react-icons/ai";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import GlobalContext from "../../../components/context/GlobalContext";
 
 export default function ProductCard({
@@ -13,31 +13,82 @@ export default function ProductCard({
 	image,
 	quantity,
 	price,
+	id,
+	setUpdate
 }) {
+	const [ quantityInCart, setQuantityInCart ] = useState(0)
 	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
+
+	useEffect(() => {
+		if (!cartProducts.length) return;
+		const productAlredyAdded = cartProducts.find(
+			(product) => product.id === id
+		);
+		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
+	}, [cartProducts]);
+
+
 	function addProduct() {
-		console.log("ADDING FROM CART")
-		const products = [...cartProducts];
-		const thisProduct = products[index];
-		thisProduct.quantity++;
-		updateCartProducts(products, { ...thisProduct });
+		console.log(">>>>>>ADDING FROM CART<<<<<<<<<<<")
+
+		const indexThisProduct = cartProducts.findIndex(
+			(product) => product.id === id
+		);
+		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
+		const alteredProduct = { id, quantity: quantityInCart + 1 };
+
+		updateCartProducts(
+			[
+				...cartProducts,
+				{
+					id,
+					name,
+					price,
+					quantity: quantityInCart + 1,
+					image
+				}
+			]
+			, alteredProduct);
+		setQuantityInCart(prev => prev + 1)
 	}
 
 	function removeProduct() {
-		console.log("REMOVE FROM CART")
-		const products = [...cartProducts];
-		const thisProduct = { ...products[index] };
-		if (thisProduct.quantity === 1) {
+		console.log(">>>>>>>>>>REMOVE FROM CART<<<<<<<")
+
+		const indexThisProduct = cartProducts.findIndex(
+			(product) => product.id === id
+		);
+		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
+		
+		if (quantityInCart === 1) {
+			const alteredProduct = { id };
 			const confirmRemove = window.confirm("Do you really want to remove?");
 			if (!confirmRemove) return;
 			else {
-				updateCartProducts(products, thisProduct);
-				products.splice(index, 1);
+				cartProducts.splice(indexThisProduct, 1);
+				updateCartProducts([...cartProducts], alteredProduct);
+				setUpdate(prev => prev + 1)
 				return;
 			}
+		} else {
+			const alteredProduct = { id, quantity: quantityInCart - 1 };
+
+			updateCartProducts(
+				[
+					...cartProducts,
+					{
+						id,
+						name,
+						price,
+						quantity: quantityInCart - 1,
+						image
+					}
+				]
+				, alteredProduct);
+			setQuantityInCart(prev => prev - 1)
+
 		}
-		thisProduct.quantity--;
-		updateCartProducts(products, thisProduct);
+
 	}
 	const totalPrice = 'U$ ' + ((price.replace('U$', '')) * quantity).toFixed(2);
 	return (
@@ -61,7 +112,7 @@ export default function ProductCard({
 					/>
 				</button>
 				<h1>
-					<strong>{quantity}</strong>
+					<strong>{quantityInCart}</strong>
 				</h1>
 				<button onClick={addProduct}>
 					<PlusCircle
@@ -79,7 +130,7 @@ export default function ProductCard({
 			</StyledPrice>
 			<StyledPrice>
 				<h1>
-					<strong>{totalPrice}</strong>
+					<strong>{(Number(price)*quantityInCart).toFixed(2)}</strong>
 				</h1>
 			</StyledPrice>
 		</StyledProductCard>

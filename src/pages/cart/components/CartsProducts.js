@@ -9,6 +9,7 @@ export default function CartsProducts() {
 	const [ isLoading, setIsLoading ] = useState(true)
 	const { cartProducts, userData } = useContext(GlobalContext);
 	const [ productsToRender, setProductsToRender ] = useState([])
+	const [ update, setUpdate ] = useState(0)
 
 	useEffect(() => {
 		if(userData?.token) {
@@ -27,7 +28,7 @@ export default function CartsProducts() {
 			setProductsToRender(cartProducts);
 			setIsLoading(false);
 		}
-	}, [setProductsToRender, userData]);
+	}, [setProductsToRender, userData, update]);
 
 	if(isLoading) return <LoadingScreen />
 
@@ -58,6 +59,8 @@ export default function CartsProducts() {
 							image={image}
 							quantity={quantity}
 							price={Number(price).toFixed(2)}
+							id={id}
+							setUpdate={setUpdate}
 						/>
 					)
 				)}
