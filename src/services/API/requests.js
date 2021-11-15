@@ -5,7 +5,9 @@ const API = {
 	signIn,
 	logOut,
 	updateCart,
-	getCart
+	getCart,
+	addToCart,
+	removeFromCart
 };
 
 function createBearerAuthorization(token) {
@@ -50,7 +52,21 @@ async function getCart(token) {
 
 // body = { cartId, productId, amount: quantity }
 async function addToCart(token, body) {
-	return axiosBase.put("/cart", body, createBearerAuthorization(token))
+	const response = await axiosBase.put("/cart", body, createBearerAuthorization(token))
+	const productsArray = response.data.products.map(product => ({ ...product, quantity: product.amount }))
+	return {
+		carttId: response.data.cartId,
+		products: productsArray
+	}
+}
+
+async function removeFromCart(token, body) {
+	const response = await axiosBase.delete("/cart", body, createBearerAuthorization(token))
+	const productsArray = response.data.products.map(product => ({ ...product, quantity: product.amount }))
+	return {
+		carttId: response.data.cartId,
+		products: productsArray
+	}
 }
 
 
