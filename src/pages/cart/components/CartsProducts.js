@@ -1,21 +1,46 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import GlobalContext from "../../../components/context/GlobalContext";
 import ProductCard from "./ProductCard";
+import LoadingScreen from "../../../components/LoadingScreen";
+import API from "../../../services/API/requests";
 
 export default function CartsProducts() {
-	const { cartProducts,setCartProducts, userData, getUserFromLocalStorage } =
-		useContext(GlobalContext);
+	const [ isLoading, setIsLoading ] = useState(true)
+	const { cartProducts, userData, cartId } = useContext(GlobalContext);
+	const [ productsToRender, setProductsToRender ] = useState([])
 
 	useEffect(() => {
-		const localStorage = getUserFromLocalStorage();
+		if(userData?.token) {
+			console.log(userData.token)
+			API.getCart(userData.token)
+				.then(res => {
+					console.log("RES: ",res)
+					setProductsToRender(res.products)
+					setIsLoading(false)
+				})
+				.catch(e => {
+					console.log(e)
+					alert("ERRO")
+				})
+		} else {
+			setProductsToRender(cartProducts)
+			setIsLoading(false)
+		}
+		
+
+		
+/* 		const localStorage = getUserFromLocalStorage();
 		if (localStorage?.user?.cart) {
 			const storagedCart = localStorage?.user?.cart;
 			setCartProducts(storagedCart);
 		}
 
-		if (userData.user?.cart) setCartProducts(userData.user.cart);
-	}, []);
+		if (userData.user?.cart) setCartProducts(userData.user.cart); */
+	}, [setProductsToRender, userData]);
+
+	if(isLoading) return <LoadingScreen />
+
 	return (
 		<section>
 			<StyledTableHeaders>
@@ -33,10 +58,10 @@ export default function CartsProducts() {
 				</div>
 			</StyledTableHeaders>
 			<ul>
-				{cartProducts.map(
-					({ name, description, image, quantity, price }, index) => (
+				{productsToRender.map(
+					({ name, description, image, quantity, price, id }, index) => (
 						<ProductCard
-							key={index}
+							key={id}
 							index={index}
 							name={name}
 							description={description}

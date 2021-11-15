@@ -43,7 +43,7 @@ async function getCart(token) {
 	const productsArray = response.data.products.map(product => ({ ...product, quantity: product.amount }))
 
 	return {
-		carttId: response.data.carttId,
+		carttId: response.data.cartId,
 		products: productsArray
 	}
 }
