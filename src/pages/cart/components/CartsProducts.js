@@ -24,19 +24,9 @@ export default function CartsProducts() {
 					alert("ERRO")
 				})
 		} else {
-			setProductsToRender(cartProducts)
-			setIsLoading(false)
+			setProductsToRender(cartProducts);
+			setIsLoading(false);
 		}
-		
-
-		
-/* 		const localStorage = getUserFromLocalStorage();
-		if (localStorage?.user?.cart) {
-			const storagedCart = localStorage?.user?.cart;
-			setCartProducts(storagedCart);
-		}
-
-		if (userData.user?.cart) setCartProducts(userData.user.cart); */
 	}, [setProductsToRender, userData]);
 
 	if(isLoading) return <LoadingScreen />
