@@ -66,7 +66,17 @@ async function addToCart(token, body) {
 }
 
 async function removeFromCart(token, body) {
-	const response = await axiosBase.delete("/cart", body, createBearerAuthorization(token))
+	console.log("SERVICE")
+	console.log("body: ", body)
+	console.log("token: ", token)
+	const response = await axiosBase.delete("/cart", {
+		headers: {
+			Authorization: `Bearer ${token}`
+		},
+		data: {
+			...body
+		}
+	})
 	const productsArray = response.data.products.map(product => ({ ...product, quantity: product.amount }))
 	return {
 		cartId: response.data.cartId,

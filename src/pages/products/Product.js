@@ -31,7 +31,6 @@ export default function Product({ id, name, description, price, image }) {
 	}
 
 	function addToCart() {
-		console.log("ADICIONEI ERRONEAMENTE")
 		const indexThisProduct = cartProducts.findIndex(
 			(product) => product.id === id
 		);

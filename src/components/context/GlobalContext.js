@@ -47,7 +47,7 @@ export function GlobalProvider({ children }) {
 		console.log("newCartArray.length: ", newCartProductsArray.length)
 		console.log("savedCartLength: ", cartProducts.length)
 
-		if(newCartProductsArray.length >= cartProducts.length && userData.token) {
+		if(newCartProductsArray.length > cartProducts.length && userData.token) {
 			console.log("ADICIONANDO")
 			API.addToCart(userData.token, {
 				cartId,
@@ -64,6 +64,7 @@ export function GlobalProvider({ children }) {
 		else if(userData.token) {
 			console.log("REMOVENDO")
 			console.log("removing product: ", product)
+			console.log("sendingToken: ", userData.token)
 			API.removeFromCart(userData.token, {
 				cartId,
 				productId: product.id
