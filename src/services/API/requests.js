@@ -4,6 +4,7 @@ const API = {
 	signUp,
 	signIn,
 	logOut,
+	getProducts,
 	updateCart,
 	getCart,
 	addToCart,
