@@ -9,30 +9,30 @@ export function GlobalProvider({ children }) {
 	const [ cartId, setCartId ] = useState(-1)
 	const [ update, setUpdate ] = useState(0)
 
-
-
-
-
 	//load locally storaged data, if a token is found, request the cart data from server
 	useEffect(() => {
+		console.log("RUNNING GLOBAL USE EFFECT LOAD CART")
 		const storagedData = getUserFromLocalStorage();
-		if(storagedData?.token) {
+		console.log("storagedData: ", storagedData)
+		if(userData.token) {
 			console.log("LOADING GLOBAL CONTEXT CART DATA FROM BACKEND")
+			console.log("sending this token: ", userData.token)
 			API.getCart(userData.token)
 				.then(res => {
+					console.log("CART RECEIVED")
+					console.log("RESPONSE: ", res)
 					setCartId(res.cartId)
 					setCartProducts(res.products)
 				})
-			setUserData({ ...userData, token: userData.token })
 		}
-		if(storagedData?.user?.cart) setCartProducts(storagedData.user.cart)
-		if(storagedData?.user?.cartId) setCartId(storagedData.user.cartId)
+/* 		else if(storagedData?.user?.cart) setCartProducts(storagedData.user.cart)
+		if(storagedData?.user?.cartId) setCartId(storagedData.user.cartId) */
 
 		return () => { 
 			console.log("GLOBAL CONTEXT useEffect saving locally")
 			setLocalStorage({ ...userData, cart: cartProducts, cartId })
 		}
-	}, [ setUserData, setCartProducts, update ])
+	}, [ userData, setCartProducts, update ])
 
 
 
@@ -40,7 +40,12 @@ export function GlobalProvider({ children }) {
 	function updateCartProducts(newCartProductsArray, product) {
 		console.log("GLOBAL updateCartProducts")
 		console.log("newCartProductsArray: ", newCartProductsArray)
+		console.log("cartProducts: ", cartProducts)
 		console.log("product: ", product)
+		console.log("cartId: ", cartId)
+
+		console.log("newCartArray.length: ", newCartProductsArray.length)
+		console.log("savedCartLength: ", cartProducts.length)
 
 		if(newCartProductsArray.length >= cartProducts.length && userData.token) {
 			console.log("ADICIONANDO")
@@ -58,6 +63,7 @@ export function GlobalProvider({ children }) {
 
 		else if(userData.token) {
 			console.log("REMOVENDO")
+			console.log("removing product: ", product)
 			API.removeFromCart(userData.token, {
 				cartId,
 				productId: product.id
