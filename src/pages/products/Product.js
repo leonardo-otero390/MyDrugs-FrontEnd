@@ -55,14 +55,11 @@ export default function Product({ id, name, description, price, image }) {
 	}
 
 	function removeProduct() {
-		console.log("INIT REMOVAL PROCESS")
 		setQuantityInCart(0);
 		const indexThisProduct = cartProducts.findIndex(
 			(product) => product.id === id
 		);
-		console.log("cartProducts length before: ", cartProducts.length)
 		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
-		console.log("cartProducts length after: ", cartProducts.length)
 		const alteredProduct = { id };
 		updateCartProducts([...cartProducts], alteredProduct);
 		setQuantityInCart(0);

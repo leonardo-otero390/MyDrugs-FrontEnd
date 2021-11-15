@@ -27,11 +27,8 @@ export function GlobalProvider({ children }) {
 		}
 /* 		else if(storagedData?.user?.cart) setCartProducts(storagedData.user.cart)
 		if(storagedData?.user?.cartId) setCartId(storagedData.user.cartId) */
+		setLocalStorage({ ...userData, cart: cartProducts, cartId })
 
-		return () => { 
-			console.log("GLOBAL CONTEXT useEffect saving locally")
-			setLocalStorage({ ...userData, cart: cartProducts, cartId })
-		}
 	}, [ userData, setCartProducts, update ])
 
 

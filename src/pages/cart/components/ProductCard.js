@@ -16,6 +16,7 @@ export default function ProductCard({
 }) {
 	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 	function addProduct() {
+		console.log("ADDING FROM CART")
 		const products = [...cartProducts];
 		const thisProduct = products[index];
 		thisProduct.quantity++;
@@ -23,6 +24,7 @@ export default function ProductCard({
 	}
 
 	function removeProduct() {
+		console.log("REMOVE FROM CART")
 		const products = [...cartProducts];
 		const thisProduct = { ...products[index] };
 		if (thisProduct.quantity === 1) {
