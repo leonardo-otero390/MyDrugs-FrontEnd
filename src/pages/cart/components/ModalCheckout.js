@@ -25,22 +25,24 @@ const customStyles = {
 export default function ModalCheckout({ closeModal, modalIsOpen, paymentOption }) {
     const [CEP, setCEP] = useState('');
     const [addressNumber, setAddressNumber] = useState('');
-    const { userData } = useContext(GlobalContext);
+    const { userData, cartId } = useContext(GlobalContext);
     function submitForm(event) {
         event.preventDefault();
         const { email, id, name } = userData.user;
 
         const body = {
             userId: id,
+            cartId,
             name,
             email,
             cep: CEP,
             addressNumber,
+            paymentId: paymentOption
         }
 
         API.checkout({ token: userData.token, body })
-        .then(()=>closeModal())
-        .catch(alert("Wasn't possible to submit"));
+            .then(() => closeModal())
+            .catch(alert("Wasn't possible to submit"));
         console.log(body);
     }
     return (

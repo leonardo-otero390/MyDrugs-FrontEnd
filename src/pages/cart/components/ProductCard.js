@@ -16,26 +16,28 @@ export default function ProductCard({
 }) {
 	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 	function addProduct() {
+		console.log("ADDING FROM CART")
 		const products = [...cartProducts];
 		const thisProduct = products[index];
 		thisProduct.quantity++;
-		updateCartProducts(products, { thisProduct });
+		updateCartProducts(products, { ...thisProduct });
 	}
 
 	function removeProduct() {
+		console.log("REMOVE FROM CART")
 		const products = [...cartProducts];
-		const thisProduct = products[index];
+		const thisProduct = { ...products[index] };
 		if (thisProduct.quantity === 1) {
 			const confirmRemove = window.confirm("Do you really want to remove?");
 			if (!confirmRemove) return;
 			else {
+				updateCartProducts(products, thisProduct);
 				products.splice(index, 1);
-				updateCartProducts(products, { thisProduct });
 				return;
 			}
 		}
 		thisProduct.quantity--;
-		updateCartProducts(products, { thisProduct });
+		updateCartProducts(products, thisProduct);
 	}
 	const totalPrice = 'U$ ' + ((price.replace('U$', '')) * quantity).toFixed(2);
 	return (

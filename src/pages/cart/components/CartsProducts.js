@@ -7,7 +7,7 @@ import API from "../../../services/API/requests";
 
 export default function CartsProducts() {
 	const [ isLoading, setIsLoading ] = useState(true)
-	const { cartProducts, userData, cartId } = useContext(GlobalContext);
+	const { cartProducts, userData } = useContext(GlobalContext);
 	const [ productsToRender, setProductsToRender ] = useState([])
 
 	useEffect(() => {
@@ -57,7 +57,7 @@ export default function CartsProducts() {
 							description={description}
 							image={image}
 							quantity={quantity}
-							price={price}
+							price={Number(price).toFixed(2)}
 						/>
 					)
 				)}

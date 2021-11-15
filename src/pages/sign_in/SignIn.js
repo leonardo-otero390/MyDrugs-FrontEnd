@@ -54,10 +54,10 @@ export default function SignIn() {
 		if (input.user && input.password)
 			API.signIn(body)
 				.then((resp) => {
-					navigate("/");
 					setLoading(false);
 					setUserData(resp.data);
 					setLocalStorage(resp.data);
+					navigate("/");
 				})
 				.catch((error) => {
 					if (!error.response) alert(`Application error: ${error.message}`);
