@@ -12,8 +12,9 @@ export default function Products() {
 	useEffect(() => {
 		API.getProducts()
 			.then((resp) => setProductsList(resp.data))
-			.catch(() =>
-				alert("Erro ao carregar produtos. Por favor, recarregue a página.")
+			.catch((e) =>
+				// alert("Erro ao carregar produtos. Por favor, recarregue a página.")
+				console.log({ erroDoido: e })
 			);
 	});
 
