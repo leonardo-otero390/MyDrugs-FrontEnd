@@ -12,8 +12,6 @@ export default function CartsProducts() {
 	const [ update, setUpdate ] = useState(0)
 
 	useEffect(() => {
-		console.log("OFFLINE CART:")
-		console.log(cartProducts)
 		if(userData?.token) {
 			console.log(userData.token)
 			API.getCart(userData.token)

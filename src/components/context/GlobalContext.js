@@ -132,6 +132,7 @@ export function GlobalProvider({ children }) {
 				setCartProducts,
 				getUserFromLocalStorage,
 				setLocalStorage,
+				setUpdate
 			}}
 		>
 			{children}
