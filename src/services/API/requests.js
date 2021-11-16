@@ -1,7 +1,6 @@
 import axiosBase from "./axiosBase";
 
 const API = {
-	checkout,
 	signUp,
 	signIn,
 	validateToken,

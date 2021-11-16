@@ -28,7 +28,7 @@ export default function Products() {
 		}
 
 		if (userData.user?.cart) setCartProducts(userData.user.cart);
-	}, []);
+	}, [getUserFromLocalStorage, setCartProducts, userData.user]);
 
 	return (
 		<div>
@@ -42,8 +42,9 @@ export default function Products() {
 							id={product.id}
 							name={product.name}
 							description={product.description}
-							price={`U$ ${Number(product.price).toFixed(2)}`}
+							price={`${Number(product.price).toFixed(2)}`}
 							image={product.image}
+							description={product.description}
 						/>
 					))
 				) : (
