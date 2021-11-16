@@ -8,6 +8,7 @@ export function GlobalProvider({ children }) {
 	const [cartProducts, setCartProducts] = useState([]);
 	const [cartId, setCartId] = useState(-1);
 	const [update, setUpdate] = useState(0);
+	const [removedProduct, setRemovedProduct] = useState(false);
 
 	//load locally storaged data, if a token is found, request the cart data from server
 	useEffect(() => {
@@ -30,19 +31,33 @@ export function GlobalProvider({ children }) {
 	}, [userData, setCartProducts, update]);
 
 	useEffect(() => {
-		if(userData.cart) {
-			console.log("setting local storage to: ")
-			console.log({ ...userData, cart: cartProducts, cartId })
+		// if (userData.cart) {
+		// console.log("setting local storage to: ");
+		// console.log({ ...userData, cart: cartProducts, cartId });
+		// setLocalStorage({ ...userData, cart: cartProducts, cartId });
+		// }
+		const storageData = getUserFromLocalStorage();
+		console.log("USE EFFECT DO CART");
+		console.log({ cartProducts });
+
+		// return () => {
+		if (cartProducts.length) {
+			console.log("tem cartProducts");
+			console.log({ cartProducts });
+
+			console.log("setting local storage to: ");
+			console.log({ ...userData, cart: cartProducts, cartId });
+			setLocalStorage({ ...userData, cart: cartProducts, cartId });
+		} else if (storageData?.cart?.length && !removedProduct) {
+			setCartProducts(storageData.cart);
+			// console.log("setting user data to: ");
+			// console.log({ ...storageData, cart: storageData.cart, cartId });
+			// setUserData({ ...storageData, cart: storageData.cart, cartId });
+		} else {
 			setLocalStorage({ ...userData, cart: cartProducts, cartId });
 		}
-		return () => { 
-			if(userData.cart) {
-				console.log("setting local storage to: ")
-				console.log({ ...userData, cart: cartProducts, cartId })
-				setLocalStorage({ ...userData, cart: cartProducts, cartId });
-			}
-		}
-	}, [cartProducts, cartId, userData]);
+		// };
+	}, [cartProducts, cartId]);
 
 	useEffect(() => {
 		API.validateToken(userData.token)
@@ -53,15 +68,19 @@ export function GlobalProvider({ children }) {
 			})
 			.catch((err) => {
 				console.log("token inválido");
-				console.log(err);
+				console.log(err.response);
+				delete userData.user;
 				delete userData.token;
-				setUserData(userData);
+				console.log({ userData });
+				setUserData({ ...userData });
 			});
 	}, []);
 
 	function updateCartProducts(newCartProductsArray, product) {
+		// setCartProducts(newCartProductsArray);
+		setRemovedProduct(true);
 		// console.log("GLOBAL updateCartProducts");
-		// console.log("newCartProductsArray: ", newCartProductsArray);
+		console.log("newCartProductsArray: ", newCartProductsArray);
 		// console.log("cartProducts: ", cartProducts);
 		// console.log("product: ", product);
 		// console.log("cartId: ", cartId);
@@ -100,6 +119,7 @@ export function GlobalProvider({ children }) {
 				});
 		} else if (!userData.token) {
 			setCartProducts(newCartProductsArray);
+			console.log("alterando cartProducts");
 		}
 
 		/* 		setUserData({

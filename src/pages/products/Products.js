@@ -15,7 +15,7 @@ export default function Products() {
 			.catch(() =>
 				alert("Erro ao carregar produtos. Por favor, recarregue a página.")
 			);
-	});
+	}, []);
 
 	const { setCartProducts, userData, getUserFromLocalStorage } =
 		useContext(GlobalContext);
