@@ -25,7 +25,7 @@ export default function ProductCard({
 			(product) => product.id === id
 		);
 		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
-	}, [cartProducts]);
+	}, [cartProducts, id]);
 
 
 	function addProduct() {
@@ -34,6 +34,7 @@ export default function ProductCard({
 		const indexThisProduct = cartProducts.findIndex(
 			(product) => product.id === id
 		);
+		console.log("index this project: ",indexThisProduct)
 		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
 		const alteredProduct = { id, quantity: quantityInCart + 1 };
 

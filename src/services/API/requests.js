@@ -1,16 +1,15 @@
 import axiosBase from "./axiosBase";
 
 const API = {
-	checkout,
 	signUp,
 	signIn,
 	validateToken,
 	logOut,
 	getProducts,
-	updateCart,
 	getCart,
 	addToCart,
 	removeFromCart,
+	checkout
 };
 
 function createBearerAuthorization(token) {
@@ -45,8 +44,8 @@ function validateToken(token) {
 function logOut({ token }) {
 	return axiosBase.delete("/sessions", createBearerAuthorization(token));
 }
-function checkout({ token, body }) {
-	return axiosBase.post("/checkout", createBearerAuthorization(token),body);
+function checkout(token, body) {
+	return axiosBase.post("/checkout", body, createBearerAuthorization(token));
 }
 
 function getProducts() {
@@ -88,9 +87,6 @@ async function addToCart(token, body) {
 }
 
 async function removeFromCart(token, body) {
-	console.log("SERVICE");
-	console.log("body: ", body);
-	console.log("token: ", token);
 	const response = await axiosBase.delete("/cart", {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -108,7 +104,5 @@ async function removeFromCart(token, body) {
 		products: productsArray,
 	};
 }
-
-function updateCart() {}
 
 export default API;

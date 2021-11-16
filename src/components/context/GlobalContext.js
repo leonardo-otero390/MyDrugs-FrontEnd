@@ -30,8 +30,19 @@ export function GlobalProvider({ children }) {
 	}, [userData, setCartProducts, update]);
 
 	useEffect(() => {
-		setLocalStorage({ ...userData, cart: cartProducts, cartId });
-	}, [cartProducts]);
+		if(userData.cart) {
+			console.log("setting local storage to: ")
+			console.log({ ...userData, cart: cartProducts, cartId })
+			setLocalStorage({ ...userData, cart: cartProducts, cartId });
+		}
+		return () => { 
+			if(userData.cart) {
+				console.log("setting local storage to: ")
+				console.log({ ...userData, cart: cartProducts, cartId })
+				setLocalStorage({ ...userData, cart: cartProducts, cartId });
+			}
+		}
+	}, [cartProducts, cartId, userData]);
 
 	useEffect(() => {
 		API.validateToken(userData.token)
@@ -46,7 +57,7 @@ export function GlobalProvider({ children }) {
 				delete userData.token;
 				setUserData(userData);
 			});
-	}, [userData.token]);
+	}, []);
 
 	function updateCartProducts(newCartProductsArray, product) {
 		// console.log("GLOBAL updateCartProducts");
@@ -121,6 +132,7 @@ export function GlobalProvider({ children }) {
 				setCartProducts,
 				getUserFromLocalStorage,
 				setLocalStorage,
+				setUpdate
 			}}
 		>
 			{children}

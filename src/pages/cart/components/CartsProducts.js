@@ -28,7 +28,7 @@ export default function CartsProducts() {
 			setProductsToRender(cartProducts);
 			setIsLoading(false);
 		}
-	}, [setProductsToRender, userData, update]);
+	}, [setProductsToRender, userData, update, cartProducts]);
 
 	if (isLoading) return <LoadingScreen />
 

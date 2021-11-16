@@ -16,7 +16,7 @@ export default function Product({ id, name, description, price, image }) {
 			(product) => product.id === id
 		);
 		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
-	}, [cartProducts]);
+	}, [cartProducts, id]);
 
 	function select(event) {
 		if (event.target.tagName === "DIV" && selected) {
@@ -73,7 +73,7 @@ export default function Product({ id, name, description, price, image }) {
 				<img src={image} alt="product" />
 				<h1>{name}</h1>
 				<p>{description}</p>
-				<strong>{price}</strong>
+				<strong>{`U$ ${price}`}</strong>
 			</ProductInfo>
 
 			<DinamicInfo>
