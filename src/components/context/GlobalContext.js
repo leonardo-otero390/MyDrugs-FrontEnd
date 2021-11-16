@@ -60,20 +60,23 @@ export function GlobalProvider({ children }) {
 	}, [cartProducts, cartId]);
 
 	useEffect(() => {
-		API.validateToken(userData.token)
-			.then((resp) => {
-				console.log("token valido");
-				console.log(resp);
-				setUserData(userData);
-			})
-			.catch((err) => {
-				console.log("token inválido");
-				console.log(err.response);
-				delete userData.user;
-				delete userData.token;
-				console.log({ userData });
-				setUserData({ ...userData });
-			});
+		const storageData = getUserFromLocalStorage();
+
+		if (storageData.token)
+			API.validateToken(storageData.token)
+				.then((resp) => {
+					console.log("token valido");
+					console.log(resp);
+					setUserData(storageData);
+				})
+				.catch((err) => {
+					console.log("token inválido");
+					console.log(err.response);
+					delete storageData.user;
+					delete storageData.token;
+					console.log({ storageData });
+					setUserData({ ...storageData });
+				});
 	}, []);
 
 	function updateCartProducts(newCartProductsArray, product) {
