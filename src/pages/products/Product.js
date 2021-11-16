@@ -16,7 +16,7 @@ export default function Product({ id, name, description, price, image }) {
 			(product) => product.id === id
 		);
 		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
-	}, [cartProducts]);
+	}, [cartProducts, id]);
 
 	function select(event) {
 		if (event.target.tagName === "DIV" && selected) {

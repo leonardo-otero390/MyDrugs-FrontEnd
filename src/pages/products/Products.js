@@ -28,7 +28,7 @@ export default function Products() {
 		}
 
 		if (userData.user?.cart) setCartProducts(userData.user.cart);
-	}, []);
+	}, [getUserFromLocalStorage, setCartProducts, userData.user]);
 
 	return (
 		<div>
