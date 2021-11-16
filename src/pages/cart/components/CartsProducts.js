@@ -6,17 +6,17 @@ import LoadingScreen from "../../../components/LoadingScreen";
 import API from "../../../services/API/requests";
 
 export default function CartsProducts() {
-	const [ isLoading, setIsLoading ] = useState(true)
+	const [isLoading, setIsLoading] = useState(true)
 	const { cartProducts, userData } = useContext(GlobalContext);
-	const [ productsToRender, setProductsToRender ] = useState([])
-	const [ update, setUpdate ] = useState(0)
+	const [productsToRender, setProductsToRender] = useState([])
+	const [update, setUpdate] = useState(0)
 
 	useEffect(() => {
-		if(userData?.token) {
+		if (userData?.token) {
 			console.log(userData.token)
 			API.getCart(userData.token)
 				.then(res => {
-					console.log("RES: ",res)
+					console.log("RES: ", res)
 					setProductsToRender(res.products)
 					setIsLoading(false)
 				})
@@ -30,7 +30,7 @@ export default function CartsProducts() {
 		}
 	}, [setProductsToRender, userData, update]);
 
-	if(isLoading) return <LoadingScreen />
+	if (isLoading) return <LoadingScreen />
 
 	return (
 		<section>
@@ -48,7 +48,7 @@ export default function CartsProducts() {
 					<h2>Total price</h2>
 				</div>
 			</StyledTableHeaders>
-			<ul>
+			<StyledProductList>
 				{productsToRender.map(
 					({ name, description, image, quantity, price, id }, index) => (
 						<ProductCard
@@ -64,7 +64,7 @@ export default function CartsProducts() {
 						/>
 					)
 				)}
-			</ul> 
+			</StyledProductList>
 		</section>
 	);
 }
@@ -91,9 +91,18 @@ const StyledTableHeaders = styled.div`
 		font-size: 24px;
 		color: #fff;
 	}
-	@media(max-width:600px){
-		div h2 {
-		font-size: 16px;
-	}
+	@media(max-width:710px){
+		display:none;
+		ul{
+			display:flex;
+			gap:24px;
+		}
 }
+`;
+const StyledProductList = styled.ul`
+@media(max-width:710px){
+	display:flex;
+	flex-direction:column;
+			gap:24px;
+		}
 `;
