@@ -36,10 +36,10 @@ export default function SignIn() {
 
 		if (localStoragedUser?.user?.token) {
 			setLoading(false);
-			navigate("/");
 			setUserData(localStoragedUser);
+			navigate("/");
 		}
-	}, []);
+	}, [getUserFromLocalStorage, navigate, setUserData]);
 
 	function submitForm(event) {
 		event.preventDefault();
@@ -54,10 +54,11 @@ export default function SignIn() {
 		if (input.user && input.password)
 			API.signIn(body)
 				.then((resp) => {
-					navigate("/");
 					setLoading(false);
 					setUserData(resp.data);
+					console.log("setting local storage")
 					setLocalStorage(resp.data);
+					navigate("/");
 				})
 				.catch((error) => {
 					if (!error.response) alert(`Application error: ${error.message}`);

@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+const NoProductsMsg = styled.h1`
+	font-family: Poppins;
+	color: white;
+	font-size: 30px;
+`;
+
 const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -156,7 +162,13 @@ const Counter = styled.div`
 	}
 `;
 
+const MaxStock = styled.p`
+	margin: 5px 0;
+	color: orange;
+`;
+
 export {
+	NoProductsMsg,
 	Container,
 	Card,
 	ProductInfo,
@@ -164,4 +176,5 @@ export {
 	Button,
 	CartQuantity,
 	Counter,
+	MaxStock,
 };

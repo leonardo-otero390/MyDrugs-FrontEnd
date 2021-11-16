@@ -6,7 +6,6 @@ import Cart from "../pages/cart/Cart";
 
 import SignUp from "../pages/sign_up/SignUp";
 import SignIn from "../pages/sign_in/SignIn";
-import Tester from "./Summary/test";
 import Products from "../pages/products/Products";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
 					<Route exact path="/cart" element={<Cart />} />
 					<Route exact path="/sign-in" element={<SignIn />} />
 					<Route exact path="/sign-up" element={<SignUp />} />
-					<Route exact path="/test" element={<Tester />} />
 				</Routes>
 			</GlobalProvider>
 		</BrowserRouter>
