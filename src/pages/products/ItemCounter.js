@@ -4,15 +4,26 @@ import {
 	AiFillMinusCircle as RemoveButton,
 } from "react-icons/ai";
 
-export default function ItemCounter({ quantity, setQuantity, setSelected }) {
+export default function ItemCounter({
+	quantity,
+	quantityInCart,
+	setQuantity,
+	setSelected,
+	stock,
+	maxStock,
+	setMaxStock,
+}) {
 	function removeItem() {
 		if (quantity === 1) setSelected(false);
 		setQuantity(quantity - 1);
+
+		if (maxStock) setMaxStock(false);
 	}
 
 	function addItem() {
 		setSelected(true);
-		setQuantity(quantity + 1);
+		if (quantity + quantityInCart < stock) setQuantity(quantity + 1);
+		else setMaxStock(true);
 	}
 	return (
 		<Counter>

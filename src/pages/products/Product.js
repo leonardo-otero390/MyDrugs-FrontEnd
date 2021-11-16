@@ -1,30 +1,49 @@
 import { useState } from "react";
-import { Card, ProductInfo, DinamicInfo, Button, CartQuantity } from "./styles";
+import {
+	Card,
+	ProductInfo,
+	DinamicInfo,
+	Button,
+	CartQuantity,
+	MaxStock,
+} from "./styles";
 import ItemCounter from "./ItemCounter";
 import { useContext, useEffect } from "react";
 import GlobalContext from "../../components/context/GlobalContext";
 
-export default function Product({ id, name, description, price, image }) {
+export default function Product({
+	id,
+	name,
+	description,
+	price,
+	image,
+	stock,
+}) {
 	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 	const [selected, setSelected] = useState(false);
 	const [quantity, setQuantity] = useState(0);
 	const [quantityInCart, setQuantityInCart] = useState(0);
+	const [maxStock, setMaxStock] = useState(false);
 
 	useEffect(() => {
+		// console.log(cartProducts);
 		if (!cartProducts.length) return;
 		const productAlredyAdded = cartProducts.find(
 			(product) => product.id === id
 		);
 		if (productAlredyAdded) setQuantityInCart(productAlredyAdded.quantity);
+		if (productAlredyAdded?.quantity === stock) setMaxStock(true);
+		else setMaxStock(false);
 	}, [cartProducts, id]);
 
 	function select(event) {
 		if (event.target.tagName === "DIV" && selected) {
 			setSelected(false);
 			setQuantity(0);
+			setMaxStock(false);
 		}
 
-		if (quantity === 0 && event.target.tagName !== "BUTTON") {
+		if (quantity === 0 && event.target.tagName !== "BUTTON" && !maxStock) {
 			setQuantity(1);
 			setSelected(true);
 		}
@@ -54,7 +73,7 @@ export default function Product({ id, name, description, price, image }) {
 		setSelected(false);
 	}
 
-	function removeProduct() {
+	function removeProducts() {
 		setQuantityInCart(0);
 		const indexThisProduct = cartProducts.findIndex(
 			(product) => product.id === id
@@ -65,6 +84,7 @@ export default function Product({ id, name, description, price, image }) {
 		setQuantityInCart(0);
 		setQuantity(0);
 		setSelected(false);
+		setMaxStock(false);
 	}
 
 	return (
@@ -83,18 +103,28 @@ export default function Product({ id, name, description, price, image }) {
 
 				{selected ? (
 					<>
+						{/* {!maxStock ? ( */}
 						<ItemCounter
 							quantity={quantity}
+							quantityInCart={quantityInCart}
 							setQuantity={setQuantity}
 							setSelected={setSelected}
+							stock={stock}
+							maxStock={maxStock}
+							setMaxStock={setMaxStock}
 						/>
+						{/* ) : null} */}
 
 						<Button children="Add to Cart" onClick={addToCart} />
 					</>
 				) : null}
 
+				{maxStock ? (
+					<MaxStock children="(This is the max quantity in stock)" />
+				) : null}
+
 				{quantityInCart ? (
-					<Button children="Remove All" onClick={removeProduct} />
+					<Button children="Remove All" onClick={removeProducts} />
 				) : null}
 			</DinamicInfo>
 		</Card>
