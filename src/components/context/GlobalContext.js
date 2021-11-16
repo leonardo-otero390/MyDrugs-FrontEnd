@@ -12,15 +12,15 @@ export function GlobalProvider({ children }) {
 
 	//load locally storaged data, if a token is found, request the cart data from server
 	useEffect(() => {
-		console.log("RUNNING GLOBAL USE EFFECT LOAD CART");
+		// console.log("RUNNING GLOBAL USE EFFECT LOAD CART");
 		const storagedData = getUserFromLocalStorage();
-		console.log("storagedData: ", storagedData);
+		// console.log("storagedData: ", storagedData);
 		if (userData.token) {
-			console.log("LOADING GLOBAL CONTEXT CART DATA FROM BACKEND");
-			console.log("sending this token: ", userData.token);
+			// console.log("LOADING GLOBAL CONTEXT CART DATA FROM BACKEND");
+			// console.log("sending this token: ", userData.token);
 			API.getCart(userData.token).then((res) => {
-				console.log("CART RECEIVED");
-				console.log("RESPONSE: ", res);
+				// console.log("CART RECEIVED");
+				// console.log("RESPONSE: ", res);
 				setCartId(res.cartId);
 				setCartProducts(res.products);
 			});
@@ -37,16 +37,16 @@ export function GlobalProvider({ children }) {
 		// setLocalStorage({ ...userData, cart: cartProducts, cartId });
 		// }
 		const storageData = getUserFromLocalStorage();
-		console.log("USE EFFECT DO CART");
-		console.log({ cartProducts });
+		// console.log("USE EFFECT DO CART");
+		// console.log({ cartProducts });
 
 		// return () => {
 		if (cartProducts.length) {
-			console.log("tem cartProducts");
-			console.log({ cartProducts });
+			// console.log("tem cartProducts");
+			// console.log({ cartProducts });
 
-			console.log("setting local storage to: ");
-			console.log({ ...userData, cart: cartProducts, cartId });
+			// console.log("setting local storage to: ");
+			// console.log({ ...userData, cart: cartProducts, cartId });
 			setLocalStorage({ ...userData, cart: cartProducts, cartId });
 		} else if (storageData?.cart?.length && !removedProduct) {
 			setCartProducts(storageData.cart);
@@ -65,16 +65,16 @@ export function GlobalProvider({ children }) {
 		if (storageData.token)
 			API.validateToken(storageData.token)
 				.then((resp) => {
-					console.log("token valido");
-					console.log(resp);
+					// console.log("token valido");
+					// console.log(resp);
 					setUserData(storageData);
 				})
 				.catch((err) => {
-					console.log("token inválido");
-					console.log(err.response);
+					// console.log("token inválido");
+					// console.log(err.response);
 					delete storageData.user;
 					delete storageData.token;
-					console.log({ storageData });
+					// console.log({ storageData });
 					setUserData({ ...storageData });
 				});
 	}, []);
@@ -106,9 +106,9 @@ export function GlobalProvider({ children }) {
 					alert("ERRO update cart products");
 				});
 		} else if (userData.token) {
-			console.log("REMOVENDO");
-			console.log("removing product: ", product);
-			console.log("sendingToken: ", userData.token);
+			// console.log("REMOVENDO");
+			// console.log("removing product: ", product);
+			// console.log("sendingToken: ", userData.token);
 			API.removeFromCart(userData.token, {
 				cartId,
 				productId: product.id,
@@ -122,7 +122,7 @@ export function GlobalProvider({ children }) {
 				});
 		} else if (!userData.token) {
 			setCartProducts(newCartProductsArray);
-			console.log("alterando cartProducts");
+			// console.log("alterando cartProducts");
 		}
 
 		/* 		setUserData({
