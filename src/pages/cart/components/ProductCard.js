@@ -121,7 +121,7 @@ export default function ProductCard({
 			<StyledPrice>
 				<h2>Price per un</h2>
 				<h1>
-					<strong>{price}</strong>
+					<strong>U$ {price}</strong>
 				</h1>
 			</StyledPrice>
 			<StyledPrice>
