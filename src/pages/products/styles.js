@@ -162,6 +162,11 @@ const Counter = styled.div`
 	}
 `;
 
+const MaxStock = styled.p`
+	margin: 5px 0;
+	color: orange;
+`;
+
 export {
 	NoProductsMsg,
 	Container,
@@ -171,4 +176,5 @@ export {
 	Button,
 	CartQuantity,
 	Counter,
+	MaxStock,
 };

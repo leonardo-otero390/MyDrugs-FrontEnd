@@ -36,17 +36,19 @@ export default function Products() {
 			<PageHeader name={"SHOP"} />
 			<Container>
 				{productsList.length > 0 ? (
-					productsList.map((product) => (
-						<Product
-							key={product.id}
-							id={product.id}
-							name={product.name}
-							description={product.description}
-							price={`${Number(product.price).toFixed(2)}`}
-							image={product.image}
-							description={product.description}
-						/>
-					))
+					productsList.map((product) =>
+						product.stock_total > 0 ? (
+							<Product
+								key={product.id}
+								id={product.id}
+								name={product.name}
+								description={product.description}
+								price={`${Number(product.price).toFixed(2)}`}
+								image={product.image}
+								stock={product.stock_total}
+							/>
+						) : null
+					)
 				) : (
 					<NoProductsMsg children="Nenhum produto disponível" />
 				)}
