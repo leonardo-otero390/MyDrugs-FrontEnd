@@ -16,7 +16,7 @@ export default function ProductCard({
 	id,
 	setUpdate
 }) {
-	const [ quantityInCart, setQuantityInCart ] = useState(0)
+	const [quantityInCart, setQuantityInCart] = useState(0)
 	const { cartProducts, updateCartProducts } = useContext(GlobalContext);
 
 	useEffect(() => {
@@ -60,7 +60,7 @@ export default function ProductCard({
 			(product) => product.id === id
 		);
 		if (indexThisProduct >= 0) cartProducts.splice(indexThisProduct, 1);
-		
+
 		if (quantityInCart === 1) {
 			const alteredProduct = { id };
 			const confirmRemove = window.confirm("Do you really want to remove?");
@@ -106,10 +106,7 @@ export default function ProductCard({
 			<StyledCounter>
 				<button onClick={removeProduct}>
 					<MinusCircle
-						style={{
-							color: "#F2F2F2",
-							fontSize: "32px",
-						}}
+						style={styleButtonIcon}
 					/>
 				</button>
 				<h1>
@@ -117,25 +114,29 @@ export default function ProductCard({
 				</h1>
 				<button onClick={addProduct}>
 					<PlusCircle
-						style={{
-							color: "#F2F2F2",
-							fontSize: "32px",
-						}}
+						style={styleButtonIcon}
 					/>
 				</button>
 			</StyledCounter>
 			<StyledPrice>
+				<h2>Price per un</h2>
 				<h1>
-					<strong>{price}</strong>
+					<strong>U$ {price}</strong>
 				</h1>
 			</StyledPrice>
 			<StyledPrice>
+			<h2>Total price</h2>
 				<h1>
-					<strong>{(Number(price)*quantityInCart).toFixed(2)}</strong>
+					<strong>{totalPrice}</strong>
 				</h1>
 			</StyledPrice>
 		</StyledProductCard>
 	);
+}
+const styleButtonIcon = {
+	color: "#F2F2F2",
+	fontSize: "24px",
+	
 }
 const StyledProductInfo = styled.ul`
 	display: flex;
@@ -159,6 +160,19 @@ const StyledProductInfo = styled.ul`
 		font-size: 14px;
 		color: #fff;
 	}
+	@media(max-width:710px){
+		width:100%;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+		gap:8px;
+		h3{
+			font-size:16px;
+		}
+		p{
+			font-size:12px;
+		}
+}
 `;
 
 const StyledCounter = styled.div`
@@ -175,12 +189,28 @@ const StyledCounter = styled.div`
 		font-size: 32px;
 		color: #fff;
 	}
+	@media (max-width: 710px) {
+		margin:8px 0;
+		h1{
+			font-size:24px;
+		}
+	}
 `;
 
 const StyledProductCard = styled.li`
 	display: flex;
 	justify-content:space-between;
 	margin: 16px 0;
+	@media(max-width:710px){
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+		background:#191919;
+		width:50%;
+		margin:0 auto;
+		border-radius:20px;
+		padding:16px;
+}
 `;
 
 const StyledPrice = styled.div`
@@ -193,4 +223,21 @@ const StyledPrice = styled.div`
 		font-size: 32px;
 		color: #fff;
 	}
+	h2{
+		display:none;
+	}
+	@media(max-width:710px){
+		flex-direction:column;
+		gap:8px;
+		width:100%;
+		h1{
+			font-size:24px;
+		}
+		h2 {
+			display:initial;
+		font-family: "Poppins", sans-serif;
+		font-size: 16px;
+		color: #fff;
+	}
+}
 `;

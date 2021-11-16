@@ -6,7 +6,7 @@ import { Fragment } from "react/cjs/react.production.min";
 import PaymentSection from "./PaymentSection";
 import OrderSection from "./OrderSection";
 import Toggler from "./Toggler";
-
+import { useNavigate } from "react-router-dom";
 /* 
 product expected schema
 const product = {
@@ -17,14 +17,14 @@ const product = {
 }
 */
 
-export default function Summary() {
-    const [ isActive, setIsActive ] = useState(false)
-    const { cartProducts } = useContext(GlobalContext)
-    
+export default function Summary({ openModal }) {
+    const [isActive, setIsActive] = useState(false)
+    const { cartProducts, userData } = useContext(GlobalContext)
+    const navigate = useNavigate();
     return (
         <SummaryContainer
             initial="unactive"
-            animate={ isActive ? "active" : "unactive" }
+            animate={isActive ? "active" : "unactive"}
             variants={variants}
             onClick={() => { setIsActive(prev => !prev) }}
         >
@@ -36,13 +36,13 @@ export default function Summary() {
                     : (
                         <ContentContainer
                             initial="unactive"
-                            animate={isActive ? "active" : "unactive" }
+                            animate={isActive ? "active" : "unactive"}
                             variants={contentVarianst}
                         >
                             <Title>Order summary</Title>
                             <OrderSection />
 
-                            <Title>Payment options</Title>                            
+                            <Title>Payment options</Title>
                             <PaymentSection />
 
                             <CheckoutButton
@@ -50,6 +50,10 @@ export default function Summary() {
                                 whileTap={{ scale: 0.99 }}
                                 onClick={e => {
                                     e.stopPropagation()
+                                    console.log(userData);
+                                    if (userData?.token) {
+                                        openModal()
+                                    } else navigate('/sign-in');
                                 }}
                             >
                                 Check out

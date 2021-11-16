@@ -149,11 +149,13 @@ export function GlobalProvider({ children }) {
 			value={{
 				userData,
 				setUserData,
+				cartId,
 				cartProducts,
 				updateCartProducts,
 				setCartProducts,
 				getUserFromLocalStorage,
 				setLocalStorage,
+				setUpdate
 			}}
 		>
 			{children}
